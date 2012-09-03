@@ -1,0 +1,67 @@
+#prihlaseni {
+	background-color: #BAC5DB;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-top: -100px;
+	margin-left: -100px;
+	padding: 10px 10px 10px 10px;
+}
+.nadpis {
+	position: absolute;
+	left: 50%;
+	margin-left: -245px;
+}
+.main {
+	position: absolute;
+	top: 120px;
+}
+.task {
+	width: 100%;
+}
+.task:hover{
+	background-color: #A3CFCA;
+	cursor: pointer;
+}
+.zahlavi_tab {
+	width: 100%;
+}
+.zahlavi {
+	font-weight: bold;
+	margin-bottom: 5px;
+	width: 25%;
+}
+.zahlavi_val{
+	width: 25%;
+}
+.seznam {
+	background-color: #DAE6E4;
+	margin-bottom: 5px;
+	position: relative;
+	cursor: default;
+}
+.seznam:hover {
+	background-color: #A3CFCA;
+}
+#task_cell {
+	width: 30%;
+}
+.zahlavi_seznam {
+	font-weight: bold;
+}
+#new_task{
+	width: 30%;
+	background-color: #D4F7CB;
+	position: absolute;
+	left: 50%;
+	margin-left: -15%;
+}
+.popis {
+	Max-width: 90%;
+	width: 90%;
+	margin: 5px 0px 5px 10px;
+	height: 100px;
+}
+.send {
+	margin-left: 35%;
+}
