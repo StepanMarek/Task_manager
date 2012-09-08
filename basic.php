@@ -76,6 +76,7 @@ $tasks = getTasks(false , "tasks.txt");
 			<td style="vertical-align: top;">
 				<p>
 					<a href="new_task.php">Nový úkol</a>
+					<a href="sklad/sklad.php">Skladiště</a>
 				</p>
 				<div class="seznam">
 					<span style='position: relative;' class="zahlavi_seznam">Jméno</span>
