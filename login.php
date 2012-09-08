@@ -5,7 +5,7 @@ ideas: pouze popis, náhlé nápady, které je třeba zapsat, možnost přílohy
 skladiště: artworky, staré verze, skripty levelů, a vůbec všechny soubory, které je lepší skladovat, možnost odkazů přes úkoly
 účty: přihlašování pod svým jménem a heslem, ohlašování přiřazení k úkolům, kalendář termínů
 */
-require("users.php");
+require("lib.php");
 $form_sent = isset($_POST["jmeno"]) && isset($_POST["heslo"]);
 $zprava = "unchanged";
 

@@ -4,36 +4,12 @@ tasks: název, datum, cíl, popis, příloha, trvání, důležitost,  tvůrce, 
 pro hezké datum : "d.m.Y G:i"
 */
 
-require("users.php");
+require("lib.php");
 
 if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 	header("Location: login.php");
 	exit;
 }
-	
-function getTasks( $rest , $tasks_file ){
-	$poradi = ["name","date","target","description","attachement","duration","importancy","creator","domain"];
-
-	$sid = fopen($tasks_file, "r");
-	$pole = explode("\n",fread($sid,filesize($tasks_file)));
-	$vysledek = [];
-	for($i=0;$i<count($pole);$i++){
-		$mezi = explode("?:", $pole[$i]);
-		$asoc = [];
-		for($j=0;$j<count($mezi);$j++){
-			$asoc[$poradi[$j]] = $mezi[$j];
-		};
-		$vysledek[$i] = $asoc;
-	};
-	fclose($sid);
-	return $vysledek;
-};
-
-function getImportanceColor ($imp){
-	$pole = ["Nízká" => "#3D99FC", "Střední" => "#F3FC3D", "Vysoká" => "red"];
-	if(isset($pole[$imp])) return $pole[$imp];
-	else return "black";
-};
 
 date_default_timezone_set("Europe/Prague");
 $tasks = getTasks(false , "tasks.txt");
@@ -53,8 +29,9 @@ $tasks = getTasks(false , "tasks.txt");
 			<td id="task_cell">
 			<?php
 				for($i=0;$i<count($tasks);$i++){
+					if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
 					if($tasks[$i]["target"] == $_COOKIE["user"]){
-						echo "<div class='task'>";
+						echo "<div class='task' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
 						echo "<table class='zahlavi_tab'>";
 						echo "<tr>";
 						echo "<td class='zahlavi'>Jméno</td>";
@@ -88,7 +65,8 @@ $tasks = getTasks(false , "tasks.txt");
 					<span style='position: absolute; left: 700px;' class="zahlavi_seznam">Splnit do</span>
 				</div><?php
 				for($i=0;$i<count($tasks);$i++){
-					echo "<div class='seznam'>";
+					if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
+					echo "<div class='seznam' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
 					if(strlen($tasks[$i]["name"]) > 10){ echo "<span style='position: relative;'>".substr($tasks[$i]["name"],0,10)." ...</span>";}
 					else{ echo "<span style='position: relative;'>".$tasks[$i]["name"]."</span>";}
 					if(strlen($tasks[$i]["target"]) > 10){ echo "<span style='position: absolute; left: 90px;'>".substr($tasks[$i]["target"],0,10)." ...</span>";}

@@ -1,12 +1,12 @@
 <?php
-require("users.php");
+require("lib.php");
 if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 	header("Location: login.php");
 	exit;
 }
 
 function saveTask($post_array, $tasks_file){
-	$vysledek = "\n";
+	$vysledek = "?:;";
 	$vysledek.=$post_array["name"]."?:";
 	$vysledek.=time()."?:";
 	$vysledek.=$post_array["target"]."?:";

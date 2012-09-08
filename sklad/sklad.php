@@ -1,28 +1,12 @@
 <?php
-require("../users.php");
+require("../lib.php");
 if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 	header("Location: ../login.php");
 	exit;
 }
-function getDirArray($file_name){
-	$poradi = ["name","link","importancy","type","download","description","date"];
 
-	$sid = fopen($file_name, "r");
-	$pole = explode("\n",fread($sid,filesize($file_name)));
-	$vysledek = [];
-	for($i=0;$i<count($pole);$i++){
-		$mezi = explode("?:", $pole[$i]);
-		$asoc = [];
-		for($j=0;$j<count($mezi);$j++){
-			$asoc[$poradi[$j]] = $mezi[$j];
-		};
-		$vysledek[$i] = $asoc;
-	};
-	fclose($sid);
-	return $vysledek;
-}
 date_default_timezone_set("Europe/Prague");
-$pole_zaloh = getDirArray("105110102111");
+$pole_zaloh = getDirArray("105110102111", false);
 ?>
 <html>
 	<head>
@@ -43,9 +27,12 @@ $pole_zaloh = getDirArray("105110102111");
 		</div>
 		<div class="seznam"><?php 
 		for($i=0;$i<count($pole_zaloh);$i++){
+			if(getTask($pole_zaloh[$i]["link"], "../tasks.txt")["name"])
+				$linktask = getTask($pole_zaloh[$i]["link"], "../tasks.txt")["name"];
+			else $linktask = "Příloha není vázána";
 			echo "
 				<span style='position: relative;'>".$pole_zaloh[$i]["name"]."</span>
-				<span style='position: absolute; left: 120px;'>".$pole_zaloh[$i]["link"]."</span>
+				<span style='position: absolute; left: 120px;'>".$linktask."</span>
 				<span style='position: absolute; left: 250px;'>".$pole_zaloh[$i]["importancy"]."</span>
 				<span style='position: absolute; left: 350px;'>".$pole_zaloh[$i]["type"]."</span>
 				<span style='position: absolute; left: 400px;'>";

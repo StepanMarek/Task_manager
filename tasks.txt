@@ -1,5 +1,5 @@
-﻿Úkol2?:1346528387?:Jirka?:Dodělat engine??:?:?:Vysoká?:Štěpán?:Programování
-Úkol3?:1346528387?:Někdo s dlouhým jménem?:Dodělat engine2??:?:?:Nízká?:Štěpán?:Programování
-Zobrazený úkol?:1346528387?:Štěpán?:Dodělat engine2??:?:?:Nízká?:Štěpán?:Programování
-PHP Úkoly?:1346528387?:Štěpán?:Je třeba dodělat tvoření úkolů a vymyslet funkce na řazení úkolů, takže good luck!?:?:?:Vysoká?:Štěpán?:Programování
-Nový úkol?:1346680448?:Štěpán?:Snad už finální zkouška popisu úkolu, zbývá dodělat pouze uploady.?:?:?:Střední?:Štěpán?:Programování
+Task manager?:1347112286?:Štěpán?:Je ještě třeba dodělat několik věcí:
+ - Dodělat nahrávání příloh, jak samostatně tak s úkoly
+ - Dodělat odčítání času a dobu trvání
+ - Dodělat design :)
+ - Vytvořit kalendář (jen možná)?:?:?:Střední?:Štěpán?:PHP programování?:;Design TM?:1347112880?:Jirka?:Je třeba nadesignovat stránku tak, aby člověk neměl vyložený odpor k jejímu používání.?:?:?:Střední?:Štěpán?:CSS a html

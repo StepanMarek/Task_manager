@@ -23,6 +23,14 @@
 	background-color: #A3CFCA;
 	cursor: pointer;
 }
+.task_self{
+		width: 40%;
+		position: absolute;
+		left: 50%;
+		margin-left:-20%;
+		cursor: default;
+		background-color: #C8DEE3;
+	}
 .zahlavi_tab {
 	width: 100%;
 }
@@ -31,14 +39,22 @@
 	margin-bottom: 5px;
 	width: 25%;
 }
+.zahlavi_s {
+	font-weight: bold;
+	margin-bottom: 5px;
+	width: 16.6%;
+}
 .zahlavi_val{
 	width: 25%;
+}
+.zahlavi_val_s{
+	width: 16.6%;
 }
 .seznam {
 	background-color: #DAE6E4;
 	margin-bottom: 5px;
 	position: relative;
-	cursor: default;
+	cursor: pointer;
 }
 .seznam:hover {
 	background-color: #A3CFCA;
