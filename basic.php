@@ -39,8 +39,8 @@ $tasks = getTasks(false , "tasks.txt");
 						echo "<td class='zahlavi'>Důležitost</td>";
 						echo "<td class='zahlavi_val' style='color: ".getImportanceColor($tasks[$i]["importancy"])."'>".$tasks[$i]["importancy"]."</td>";
 						echo "</tr><tr>";
-						echo "<td class='zahlavi'>Do splnění</td>";
-						if($tasks[$i]["duration"]){echo "<td class='zahlavi_val'>".$tasks[$i]["duration"]."</td>";}
+						echo "<td class='zahlavi'>Splnit do</td>";
+						if($tasks[$i]["duration"]){echo "<td class='zahlavi_val'  style='color: ".getDeadlineColor($tasks[$i])."'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</td>";}
 						else{echo "<td class='zahlavi_val'>Libovolně dlouho</td>";}
 						echo "</tr></table>";
 						echo $tasks[$i]["description"];
@@ -76,7 +76,7 @@ $tasks = getTasks(false , "tasks.txt");
 					if(isset($tasks[$i]["domain"])){echo "<span style='position: absolute; left: 400px;'>".$tasks[$i]["domain"]."</span>";}
 					else{echo "<span style='position: absolute; left: 400px;'>Neuveden</span>";}
 					echo "<span style='position: absolute; left: 550px;'>".date("d.m.Y G:i",$tasks[$i]["date"])."</span>";
-					if($tasks[$i]["duration"]) echo "<span style='position: absolute; left: 700px;'>".$tasks[$i]["duration"]."</span>";
+					if($tasks[$i]["duration"]) echo "<span style='position: absolute; left: 700px; color: ".getDeadlineColor($tasks[$i]).";'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</span>";
 					else echo "<span style='position: absolute; left: 700px;'>Libovolně dlouho</span>";
 					echo "</div>";
 				};

@@ -6,19 +6,50 @@ if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 }
 
 function saveTask($post_array, $tasks_file){
+	$months = [31,28,31,30,31,30,31,31,30,31,30,31];
+	$cas_ted = time();
 	$vysledek = "?:;";
 	$vysledek.=$post_array["name"]."?:";
-	$vysledek.=time()."?:";
+	$vysledek.=$cas_ted."?:";
 	$vysledek.=$post_array["target"]."?:";
 	$vysledek.=$post_array["description"]."?:";
-	if(isset($post_array["attachement"]))
-		$vysledek.=$post_array["attachement"]."?:";
+	if(isset($_FILES["attachement"])){
+		$vysledek.=$_FILES["attachement"]["name"]."?:";
+		move_uploaded_file($_FILES["attachement"]["tmp_name"],"./sklad/".$_FILES["attachement"]["name"]);
+		$attach_str = "\n";
+		$attach_str .= substr($_FILES["attachement"]["name"],0,strpos($_FILES["attachement"]["name"], "."))."?:";
+		$attach_str .= $cas_ted."?:";
+		$attach_str .= $post_array["importancy"]."?:";
+		$attach_str .= $_FILES["attachement"]["type"]."?:";
+		$attach_str .= $_FILES["attachement"]["name"]."?:";
+		$attach_str .= "Příloha k úkolu ".$post_array["name"]."?:";
+		$attach_str .= $cas_ted;
+		$sid = fopen("./sklad/105110102111", "a");
+		fwrite($sid, $attach_str);
+		fclose($sid);
+	}
 	else
 		$vysledek.="?:";
 	if($post_array["duration"] == "UNLIM")
 		$vysledek.="?:";
-	else
-		$vysledek.=$post_array["duration"]."?:";
+	else{	
+		if($_POST["dur_input_type"] == "hours"){
+			$vysledek.=($post_array["duration"]*3600)."?:";
+		}
+		if($_POST["dur_input_type"] == "days"){
+			$vysledek.=($post_array["duration"]*3600*24)."?:";
+		}
+		if($_POST["dur_input_type"] == "months"){
+			$dur = $post_array["duration"];
+			$vysledny_cas = 0;
+			while($dur > 12){
+				$vysledny_cas += 365*24*3600;
+				$dur -= 12;
+			};
+			$vysledny_cas += $dur*30*24*3600;
+			$vysledek.=$dur."?:";
+		}
+		}
 	$vysledek.=$post_array["importancy"]."?:";
 	$vysledek.=$_COOKIE["user"]."?:";
 	$vysledek.=$post_array["domain"];

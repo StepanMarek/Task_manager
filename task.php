@@ -13,6 +13,13 @@
 	else {
 		$task = getTask($_GET["id"], "tasks.txt");
 	};
+	
+	if(isset($_POST["id"])){
+		//if(file_exists($_POST["id"]))
+			header("Content-Disposition: attachement; filename='".$_POST["id"]."'");
+			readfile("sklad/".$_POST["id"]);
+	};
+	
 	date_default_timezone_set("Europe/Prague");
 	$pole_zaloh = getDirArray("sklad/105110102111", $_GET["id"]);
 ?>
@@ -51,10 +58,10 @@
 				<td class="zahlavi_s">
 					Do
 				</td>
-				<td class="zahlavi_val_s">
+				<td class="zahlavi_val_s" style="color: <?php echo getDeadlineColor($task);?>">
 				<?php
-					if($task["duration"]){echo $task["duration"];}
-					else{echo "UNLIM";}
+					if($task["duration"]){echo getDeadline($task["duration"],$task["date"]);}
+					else{echo "Libovolně dlouho";}
 				?>
 				</td>
 				</tr>
@@ -103,7 +110,16 @@
 							echo "<tr>";
 							echo "<td>".$pole_zaloh[$i]["name"];
 							echo "</td>";
-							echo "<td><button>Stáhnout</button>";
+							echo "<td>";
+							if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
+								echo	"<form method='post' action='task.php?id=".$_GET["id"]."'>
+									<input type='hidden' value='".$pole_zaloh[$i]["download"]."' name='id'>
+									<button type='submit'>Stáhnout</button>
+									</form>";
+							}
+							else{
+								echo "<a href='".$pole_zaloh[$i]["download"]."'>Odkaz</a>";
+							}
 							echo "</td>";
 							echo "</tr>";
 						};

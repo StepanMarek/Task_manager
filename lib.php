@@ -32,6 +32,20 @@ function getImportanceColor ($imp){
 	else return "black";
 };
 
+function getDeadline($mtime,$crtime){
+	$months = [31,28,31,30,31,30,31,31,30,31,30,31];
+	$vysledek = "";
+	$cas = $mtime+$crtime;
+	$vysledek = date("d.m.Y G:i", $cas);
+	return $vysledek;
+};
+
+function getDeadlineColor($obj){
+	if(time()>$obj["duration"]+$obj["date"] && $obj["duration"])
+		return "red";
+	else return "black";
+};
+
 /* Funkce pro práci s uživately */
 function user_exists( $id ){
 	$sid = fopen("12157914","r");
@@ -83,7 +97,7 @@ function getDirArray($file_name, $rest){
 		for($j=0;$j<count($mezi);$j++){
 			$asoc[$poradi[$j]] = $mezi[$j];
 		};
-		$vysledek[$i] = $asoc;
+		$vysledek[] = $asoc;
 	};
 	fclose($sid);
 	return $vysledek;

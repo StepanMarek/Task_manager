@@ -5,6 +5,12 @@ if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 	exit;
 }
 
+if(isset($_POST["id"])){
+	//if(file_exists($_POST["id"]))
+		header("Content-Disposition: attachement; filename='".$_POST["id"]."'");
+		readfile($_POST["id"]);
+};
+
 date_default_timezone_set("Europe/Prague");
 $pole_zaloh = getDirArray("105110102111", false);
 ?>
@@ -21,24 +27,24 @@ $pole_zaloh = getDirArray("105110102111", false);
 			<span style='position: absolute; left: 120px;' class="zahlavi_seznam">K Úkolu</span>
 			<span style='position: absolute; left: 250px;' class="zahlavi_seznam">Důležitost</span>
 			<span style='position: absolute; left: 350px;' class="zahlavi_seznam">Typ</span>
-			<span style='position: absolute; left: 400px;' class="zahlavi_seznam">Stáhnout/Odkaz na soubor</span>
-			<span style='position: absolute; left: 600px;' class="zahlavi_seznam">Popis</span>
-			<span style='position: absolute; left: 700px;' class="zahlavi_seznam">Vytvořeno</span>
+			<span style='position: absolute; left: 550px;' class="zahlavi_seznam">Stáhnout/Odkaz na soubor</span>
+			<span style='position: absolute; left: 750px;' class="zahlavi_seznam">Popis</span>
+			<span style='position: absolute; left: 1000px;' class="zahlavi_seznam">Vytvořeno</span>
 		</div>
-		<div class="seznam"><?php 
+		<?php 
 		for($i=0;$i<count($pole_zaloh);$i++){
 			if(getTask($pole_zaloh[$i]["link"], "../tasks.txt")["name"])
 				$linktask = getTask($pole_zaloh[$i]["link"], "../tasks.txt")["name"];
 			else $linktask = "Příloha není vázána";
-			echo "
+			echo "<div class=\"seznam\">
 				<span style='position: relative;'>".$pole_zaloh[$i]["name"]."</span>
 				<span style='position: absolute; left: 120px;'>".$linktask."</span>
 				<span style='position: absolute; left: 250px;'>".$pole_zaloh[$i]["importancy"]."</span>
 				<span style='position: absolute; left: 350px;'>".$pole_zaloh[$i]["type"]."</span>
-				<span style='position: absolute; left: 400px;'>";
+				<span style='position: absolute; left: 550px;'>";
 			
 			if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
-				echo	"<form method='post' action='../vec.php'>
+				echo	"<form method='post' action='sklad.php'>
 						<input type='hidden' value='".$pole_zaloh[$i]["download"]."' name='id'>
 						<button type='submit' class='odkaz'>Stáhnout</button>
 					</form>";
@@ -48,11 +54,11 @@ $pole_zaloh = getDirArray("105110102111", false);
 			}
 				
 			echo	"</span>
-				<span style='position: absolute; left: 600px;'>".$pole_zaloh[$i]["description"]."</span>
-				<span style='position: absolute; left: 700px;'>".date("d.m.Y G:i",$pole_zaloh[$i]["date"])."</span>";
+				<span style='position: absolute; left: 750px;'>".$pole_zaloh[$i]["description"]."</span>
+				<span style='position: absolute; left: 1000px;'>".date("d.m.Y G:i",$pole_zaloh[$i]["date"])."</span>
+				</div>";
 			}
 			?>
-		</div>
 	</div>
 	</body>
 </html>
