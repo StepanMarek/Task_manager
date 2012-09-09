@@ -22,7 +22,7 @@ if($form_sent){
 	else{
 		setcookie("id",$_SERVER["REMOTE_ADDR"],time()+60*15);
 		setcookie("user",$login_by_post["name"]);
-		header("Location: ".$_SERVER["HTTP_REFERER"]."/../basic.php");
+		header("Location: index.php");
 	}
 }
 ?>

@@ -32,9 +32,10 @@ function saveTask($post_array, $tasks_file){
 	}
 	else
 		$vysledek.="?:";
-	if($post_array["duration"] == "UNLIM")
+	if($post_array["duration"] == ""){
 		$vysledek.="?:";
-	else{	
+	}
+	else{
 		if($_POST["dur_input_type"] == "hours"){
 			$vysledek.=($post_array["duration"]*3600)."?:";
 		}
@@ -69,79 +70,138 @@ else if(!isset($_POST["target"]) || $_POST["target"] == "")
 	$errors["target"] = "Nezadali jste, komu je tento úkol určen";
 else{
 	saveTask($_POST, "tasks.txt");
-	header("Location: basic.php");
+	header("Location: index.php");
 }
 
 ?>
+<!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<title>Vytvoření nového úkolu</title>
-	</head>
-	<body>
-		<div id="new_task"><form method="post" action="new_task.php"  enctype="multipart/form-data">
-		<table class="zahlavi_tab">
-		<tr>
-			<td class="zahlavi">
-				Jméno
-			</td>
-			<td>
-				<input type="text" name="name" onclick="this.select();" value="Město úkol">*
-			</td>
-		</tr>
-		<tr>
-			<td class="zahlavi">
-				Cíl (kdo má tento úkol splnit)
-			</td>
-			<td>
-				<input type="text" name="target" onclick="this.select();" value="Štěpán">*
-			</td>
-		</tr>
-		<tr>
-			<td class="zahlavi">
-				Důležitost
-			</td>
-			<td>
-				<select name="importancy">
-					<option value="Nízká">Nízká</option>
-					<option value="Střední">Střední</option>
-					<option value="Vysoká">Vysoká</option>
-				</select>*
-			</td>
-		</tr>
-		<tr>
-			<td class="zahlavi">
-				Doba trvání (za jak dlouho by měl být úkol hotov)
-			</td>
-			<td>
-				<input type="text" name="duration" onclick="this.select();" value="UNLIM">
-				<select name="dur_input_type">
-					<option value="hours">V hodinách</option>
-					<option value="days">Ve dnech</option>
-					<option value="months">V měsících</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td class="zahlavi">
-				Obor
-			</td>
-			<td>
-				<input type="text" name="domain">
-			</td>
-		</tr>
-		<tr>
-			<td class="zahlavi">
-				Příloha
-			</td>
-			<td>
-				<input type="file" name="attachement">
-			</td>
-		</tr>
+<head>
+	<meta charset="utf-8">
+	<title>Vytvoření nového úkolu</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="javascript/game_of_life.js"></script>
+	<script src="javascript/prefixfree.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+
+	<script>
+	function generate_name(dom){
+		var slovesa = ["uvařit", "naprogramovat", "vymodelovat", "postavit", "nakreslit", "napsat", "vygenerovat", "přečíst"];
+		var jmena = ["vajíčka", "engine", "hospodu", "mrakodrap", "Zanea", "dialogy", "spodní patra", "questy"];
+
+		var quote = slovesa[Math.floor(slovesa.length*Math.random())] + " " + jmena[Math.floor(jmena.length*Math.random())];
+		dom.placeholder = quote;
+	}
+	function generate_obor(dom){
+		var obors = ["programování", "psaní", "kreslení", "texturování", "modelování", "skriptování", "design"];
+		var quote = obors[Math.floor(obors.length*Math.random())];
+		dom.placeholder = quote;
+	}
+	
+	var bg;
+	$(document).ready(function(){
+		generate_name( document.getElementById("jmeno_ukolu") );
+		generate_obor( document.getElementById("obor") );
+
+		bg = new GOLBackground( document.body, 256, 256, 6, 2);
+		bg.update(20);
+		bg.render();
+		// pro pohyblivé pozadí:
+		// setInterval( function(){
+		// 	bg.update(1);
+		// 	bg.render();
+		// }, 150 )
+
+		// u všech textových inputů dá tenhle eventhandler
+		$("input[type='text'], textarea").on("click",function(){
+			this.select();
+		})
+	})
+	</script>
+</head>
+<body>
+<?php
+include("header.php");
+?>
+	<div id="new_task">
+		<h1 class="center">Nový úkol</h1>
+		<form method="post" action="new_task.php" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td class="zahlavi important">
+					Jméno úkolu
+				</td>
+				<td>
+					<input required class="long" type="text" id="jmeno_ukolu" name="name" placeholder="Uvařit vajíčka">
+				</td>
+			</tr>
+			<tr>
+				<td class="zahlavi important">
+					Přiřazený člen
+				</td>
+				<td>
+					<select name="target">
+						<option value="anyone">Kdokoli</option>
+						<option value="Štěpán">Štěpán</option>
+						<option value="Jirka">Jirka</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="zahlavi important">
+					Důležitost
+				</td>
+				<td>
+					<select name="importancy">
+						<option value="Nízká">Nízká</option>
+						<option value="Střední">Střední</option>
+						<option value="Vysoká">Vysoká</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="zahlavi">
+					Konečný termín
+				</td>
+				<td>
+					<input type="text" name="duration" placeholder="žádný">
+					<select name="dur_input_type">
+						<option value="hours">V hodinách</option>
+						<option value="days">Ve dnech</option>
+						<option value="months">V měsících</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="zahlavi">
+					Obor
+				</td>
+				<td>
+					<input type="text" class="long" name="domain" id="obor">
+				</td>
+			</tr>
+			<tr>
+				<td class="zahlavi">
+					Příloha
+				</td>
+				<td>
+					<input type="file" name="attachement">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="center">
+					<textarea required class="popis" name="description" placeholder="Popis úkolu"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="center">
+					<input type="submit" value="Vytvořit úkol" class="send"></input>
+				</td>
+			</tr>
 		</table>
-		<textarea class="popis" onclick="this.select();" name="description">Bez popisu</textarea>*
-		<button type="submit" class="send">Vytvořit úkol</button>
-		</form></div>
-	</body>
+		
+		</form>
+	</div>
+	
+</body>
 </html>

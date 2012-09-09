@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Fonty
+   ========================================================================== */
+@font-face {
+    font-family: 'OpenSansRegular';
+    src: url('../fonts/OpenSans-Regular-webfont.eot');
+    src: url('../fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSansExtrabold';
+    src: url('../fonts/OpenSans-ExtraBold-webfont.eot');
+    src: url('../fonts/OpenSans-ExtraBold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-ExtraBold-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-ExtraBold-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ==========================================================================
+   Obecné
+   ========================================================================== */
+
+body {
+	font-family: "OpenSansRegular";
+	font-size: 13pt;
+	color:#333;
+}
+input {
+	font-family: "OpenSansRegular";
+	color:#333;
+}
+.upperbar {
+	z-index:100;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:50px;
+	line-height: 50px;
+	padding-left:50px;
+	color:#F9F9F9;
+	font-size:14pt;
+	box-shadow: 0 0 3px #666;
+	background: linear-gradient(#666666 0%,#505050 100%); /* W3C */
+}
+.upperbar .name {
+	float:left;
+	margin-right:50px;
+	font-family: "OpenSansExtrabold";
+}
+.upperbar .navigation {
+	padding:0;
+	margin:0;
+	list-style-type: none;
+	display:inline;
+}
+.upperbar .navigation a {
+	color:#F9F9F9;
+	text-decoration: none;
+	display:block;
+	width:150px;
+	height:50px;
+	float:left;
+	padding:0 5px;
+	text-align: center;
+}
+.upperbar .navigation li {
+	float:left;
+}
+.upperbar .navigation a:hover {
+	color:#333;
+	background: linear-gradient(#ffffff 0%,#ededed 100%);
+}
+.gap {
+	height:50px;
+}
+/* ==========================================================================
+   Semi-obecné
+   ========================================================================== */
+
+.long {
+	width:100%;
+}
+.center {
+	text-align: center;
+}
+.important {
+	color:#24B34A;
+}
+/* ==========================================================================
+   Nový úkol
+   ========================================================================== */
+
+#new_task h1 {
+	padding:0;
+	margin:0;
+	margin-bottom:20px;
+	font-size:36pt;
+	color:#505050;
+	text-shadow: 1px 1px 1px #888;
+}
+#new_task {
+	width: 50%;
+	position: relative;
+	margin:0px auto;
+
+	padding: 20px 0 40px 0;
+
+	/*border:2px #666 solid;*/
+	border-radius: 10px;
+	box-shadow: 0 0 3px #333;
+	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+}
+#new_task table {
+	margin:0px auto;
+	width:80%;
+}
+#new_task table td {
+	padding: 5px 0;
+	position:relative;
+}
+
+#new_task .popis {
+	width:100%;
+	height: 50px;
+}
+
+#new_task .send {
+	margin-top:5px;
+	border:0px transparent none;
+	width:150px;
+	height:50px;
+	font-size: 15pt;
+	background-image: linear-gradient(#32f262 0%,#24b34a 100%);
+	box-shadow: 0 0 4px #666;
+	transition: box-shadow 0.5s;
+}
+#new_task .send:hover {
+	box-shadow: 0 0 6px #222;
+	background-image: linear-gradient(#58EF7E 0%,#4EB267 100%);
+}
