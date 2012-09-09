@@ -15,9 +15,10 @@
 	};
 	
 	if(isset($_POST["id"])){
-		//if(file_exists($_POST["id"]))
+		if(puvodni("sklad/".$_POST["id"])){
 			header("Content-Disposition: attachement; filename='".$_POST["id"]."'");
 			readfile("sklad/".$_POST["id"]);
+		}
 	};
 	
 	date_default_timezone_set("Europe/Prague");
@@ -106,6 +107,7 @@
 			<p>
 				<table>
 					<?php
+					if($pole_zaloh){
 						for($i=0;$i<count($pole_zaloh);$i++){
 							echo "<tr>";
 							echo "<td>".$pole_zaloh[$i]["name"];
@@ -123,6 +125,11 @@
 							echo "</td>";
 							echo "</tr>";
 						};
+					}
+					else echo "Žádné pomocné materiály nejsou k dispozici.";
+					?>
+					<?php
+						print_r($pole_zaloh);
 					?>
 				</table>
 			</p>

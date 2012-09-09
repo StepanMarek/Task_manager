@@ -8,15 +8,17 @@ if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 function saveTask($post_array, $tasks_file){
 	$months = [31,28,31,30,31,30,31,31,30,31,30,31];
 	$cas_ted = time();
-	$vysledek = "?:;";
+	if(filesize($tasks_file) > 0)
+		$vysledek = "?:;";
 	$vysledek.=$post_array["name"]."?:";
 	$vysledek.=$cas_ted."?:";
 	$vysledek.=$post_array["target"]."?:";
 	$vysledek.=$post_array["description"]."?:";
-	if(isset($_FILES["attachement"])){
+	if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){
 		$vysledek.=$_FILES["attachement"]["name"]."?:";
 		move_uploaded_file($_FILES["attachement"]["tmp_name"],"./sklad/".$_FILES["attachement"]["name"]);
-		$attach_str = "\n";
+		if(filesize("./sklad/105110102111") > 0)
+			$attach_str = "\n";
 		$attach_str .= substr($_FILES["attachement"]["name"],0,strpos($_FILES["attachement"]["name"], "."))."?:";
 		$attach_str .= $cas_ted."?:";
 		$attach_str .= $post_array["importancy"]."?:";

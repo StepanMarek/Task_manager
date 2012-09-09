@@ -2,20 +2,22 @@
 /* Funkce pro práci s úkoly */
 function getTasks( $rest , $tasks_file ){
 	$poradi = ["name","date","target","description","attachement","duration","importancy","creator","domain"];
-
-	$sid = fopen($tasks_file, "r");
-	$pole = explode("?:;",fread($sid,filesize($tasks_file)));
-	$vysledek = [];
-	for($i=0;$i<count($pole);$i++){
-		$mezi = explode("?:", $pole[$i]);
-		$asoc = [];
-		for($j=0;$j<count($mezi);$j++){
-			$asoc[$poradi[$j]] = $mezi[$j];
+	if(filesize($tasks_file) > 0){
+		$sid = fopen($tasks_file, "r");
+		$pole = explode("?:;",fread($sid,filesize($tasks_file)));
+		$vysledek = [];
+		for($i=0;$i<count($pole);$i++){
+			$mezi = explode("?:", $pole[$i]);
+			$asoc = [];
+			for($j=0;$j<count($mezi);$j++){
+				$asoc[$poradi[$j]] = $mezi[$j];
+			};
+			$vysledek[$i] = $asoc;
 		};
-		$vysledek[$i] = $asoc;
-	};
-	fclose($sid);
-	return $vysledek;
+		fclose($sid);
+		return $vysledek;
+	}
+	else return false;
 };
 
 function getTask($crTime, $tasks_file){
@@ -83,23 +85,39 @@ function logged( $addr ){
 /* Funkce pro práci se soubory */
 function getDirArray($file_name, $rest){
 	$poradi = ["name","link","importancy","type","download","description","date"];
-
-	$sid = fopen($file_name, "r");
-	$pole = explode("\n",fread($sid,filesize($file_name)));
-	$vysledek = [];
-	for($i=0;$i<count($pole);$i++){
-		$mezi = explode("?:", $pole[$i]);
-		$asoc = [];
-		if($rest){
-			if($rest == $mezi[1]){}
-			else continue;
-		}
-		for($j=0;$j<count($mezi);$j++){
-			$asoc[$poradi[$j]] = $mezi[$j];
+	if(filesize($file_name) > 0){
+		$sid = fopen($file_name, "r");
+		$pole = explode("\n",fread($sid,filesize($file_name)));
+		$vysledek = [];
+		for($i=0;$i<count($pole);$i++){
+			$mezi = explode("?:", $pole[$i]);
+			$asoc = [];
+			if($rest){
+				if($rest == $mezi[1]){}
+				else continue;
+			}
+			for($j=0;$j<count($mezi);$j++){
+				$asoc[$poradi[$j]] = $mezi[$j];
+			};
+			$vysledek[] = $asoc;
 		};
-		$vysledek[] = $asoc;
-	};
-	fclose($sid);
-	return $vysledek;
+		fclose($sid);
+		return $vysledek;
+	}
+	else {
+		return false;
+	}
 }
+
+function puvodni($filename){
+	if(!is_file($filename))
+		return false;
+	if(strpos($filename,"./"))
+		return false;
+	if(strpos($filename, "sklad.php"))
+		return false;
+	if(strpos($filename, "105110102111"))
+		return false;
+	return true;
+};
 ?>

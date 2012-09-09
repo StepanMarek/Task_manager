@@ -1,5 +1,1 @@
-﻿Task manager?:1347112286?:Štěpán?:Je ještě třeba dodělat několik věcí:
- - Dodělat nahrávání příloh, jak samostatně tak s úkoly
- - Dodělat odčítání času a dobu trvání
- - Dodělat design :)
- - Vytvořit kalendář (jen možná)?:?:18000?:Střední?:Štěpán?:PHP programování?:;Design TM?:1347112880?:Jirka?:Je třeba nadesignovat stránku tak, aby člověk neměl vyložený odpor k jejímu používání.?:?:?:Střední?:Štěpán?:CSS a html?:;Přílohy?:1347189177?:Štěpán?:Tento úkol by měl být vhodná demonstrace pro download příloh.?:Matematika.ggb?:3600?:Vysoká?:Štěpán?:PHP programování
+Dodělávky?:1347193593?:Štěpán?:Zbývá dodělat pár nepovinných věcí: kalendář a bezpečnější cookies.?:?:1209600?:Nízká?:Štěpán?:PHP programování?:;Zvláštní přílohy?:1347193789?:Štěpán?:Ještě zbývá dodělat nahrávání samostatných příloh, protože potřebujeme mít všechny věci relativně přehledně dostupné.?:?:345600?:Střední?:Štěpán?:PHP programování

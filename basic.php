@@ -18,9 +18,17 @@ $tasks = getTasks(false , "tasks.txt");
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles.css">
-		<title>Task manager 0.5</title>
+		<title>Task manager 1.0</title>
+		<script>
+			function zarovnat (){
+				obj = document.getElementById('prazdny');
+				if(obj){
+					obj.style.width = 3*window.innerWidth/10;
+				};
+			};
+		</script>
 	</head>
-	<body>
+	<body onload="zarovnat();">
 		<img src="logo_simple.jpg" class="nadpis">
 		<!-- Zde začíná kód pro výpis aktuálních tasks, řadí se podle data, důležitosti a osoby, ke které směřují -->
 		<div class="main">
@@ -28,6 +36,8 @@ $tasks = getTasks(false , "tasks.txt");
 			<tr>
 			<td id="task_cell">
 			<?php
+			if($tasks){
+				$vykresleno = false;
 				for($i=0;$i<count($tasks);$i++){
 					if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
 					if($tasks[$i]["target"] == $_COOKIE["user"]){
@@ -45,8 +55,13 @@ $tasks = getTasks(false , "tasks.txt");
 						echo "</tr></table>";
 						echo $tasks[$i]["description"];
 						echo "</div>";
+						$vykresleno = true;
 					}
 				};
+			}
+			if(!$vykresleno){
+				echo "<div id='prazdny'>Nemáte žádné úkoly</div>";
+			}
 			?>
 			</td>
 			<!-- Zde se vytváří zjednodušený seznam VŠECH aktuálních úkolů, pouze dle data vytvoření a dokončení -->
@@ -64,22 +79,24 @@ $tasks = getTasks(false , "tasks.txt");
 					<span style='position: absolute; left: 550px;' class="zahlavi_seznam">Vytvořeno</span>
 					<span style='position: absolute; left: 700px;' class="zahlavi_seznam">Splnit do</span>
 				</div><?php
-				for($i=0;$i<count($tasks);$i++){
-					if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
-					echo "<div class='seznam' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
-					if(strlen($tasks[$i]["name"]) > 10){ echo "<span style='position: relative;'>".substr($tasks[$i]["name"],0,10)." ...</span>";}
-					else{ echo "<span style='position: relative;'>".$tasks[$i]["name"]."</span>";}
-					if(strlen($tasks[$i]["target"]) > 10){ echo "<span style='position: absolute; left: 90px;'>".substr($tasks[$i]["target"],0,10)." ...</span>";}
-					else{ echo "<span style='position: absolute; left: 90px;'>".$tasks[$i]["target"]."</span>";}
-					echo "<span style='position: absolute; left: 200px;'>".$tasks[$i]["importancy"]."</span>";
-					echo "<span style='position: absolute; left: 300px;'>".$tasks[$i]["creator"]."</span>";
-					if(isset($tasks[$i]["domain"])){echo "<span style='position: absolute; left: 400px;'>".$tasks[$i]["domain"]."</span>";}
-					else{echo "<span style='position: absolute; left: 400px;'>Neuveden</span>";}
-					echo "<span style='position: absolute; left: 550px;'>".date("d.m.Y G:i",$tasks[$i]["date"])."</span>";
-					if($tasks[$i]["duration"]) echo "<span style='position: absolute; left: 700px; color: ".getDeadlineColor($tasks[$i]).";'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</span>";
-					else echo "<span style='position: absolute; left: 700px;'>Libovolně dlouho</span>";
-					echo "</div>";
-				};
+				if($tasks){
+					for($i=0;$i<count($tasks);$i++){
+						if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
+							echo "<div class='seznam' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
+						if(strlen($tasks[$i]["name"]) > 10){ echo "<span style='position: relative;'>".substr($tasks[$i]["name"],0,10)." ...</span>";}
+						else{ echo "<span style='position: relative;'>".$tasks[$i]["name"]."</span>";}
+						if(strlen($tasks[$i]["target"]) > 10){ echo "<span style='position: absolute; left: 90px;'>".substr($tasks[$i]["target"],0,10)." ...</span>";}
+						else{ echo "<span style='position: absolute; left: 90px;'>".$tasks[$i]["target"]."</span>";}
+						echo "<span style='position: absolute; left: 200px;'>".$tasks[$i]["importancy"]."</span>";
+						echo "<span style='position: absolute; left: 300px;'>".$tasks[$i]["creator"]."</span>";
+						if(isset($tasks[$i]["domain"])){echo "<span style='position: absolute; left: 400px;'>".$tasks[$i]["domain"]."</span>";}
+						else{echo "<span style='position: absolute; left: 400px;'>Neuveden</span>";}
+						echo "<span style='position: absolute; left: 550px;'>".date("d.m.Y G:i",$tasks[$i]["date"])."</span>";
+						if($tasks[$i]["duration"]) echo "<span style='position: absolute; left: 700px; color: ".getDeadlineColor($tasks[$i]).";'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</span>";
+						else echo "<span style='position: absolute; left: 700px;'>Libovolně dlouho</span>";
+						echo "</div>";
+					};
+				}
 				?>
 			</td>
 			</tr>
