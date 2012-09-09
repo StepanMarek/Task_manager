@@ -15,97 +15,127 @@ date_default_timezone_set("Europe/Prague");
 $tasks = getTasks(false , "tasks.txt");
 ?>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<title>Task manager 1.0</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<script src="javascript/prefixfree.min.js"></script>
-		<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
-		<script>
-			function zarovnat (){
-				obj = document.getElementById('prazdny');
-				if(obj){
-					obj.style.width = 3*window.innerWidth/10;
-				};
-			};
-		</script>
-	</head>
-	<body onload="zarovnat();">
+<head>
+	<meta charset="utf-8">
+	<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+	<title>Task manager 1.0</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="javascript/prefixfree.min.js"></script>
+	<script src="javascript/game_of_life.js"></script>
+	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		bg = new GOLBackground( document.body, 256, 256, 6, 2);
+		bg.update(20);
+		bg.render();
+		// pro pohyblivé pozadí:
+		// setInterval( function(){
+		// 	bg.update(1);
+		// 	bg.render();
+		// }, 150 )
+
+		// $("#task_list .task").on("mouseover", function(){
+		// 	var load_height = $(this).height();
+		// 	console.log(load_height)
+		// 	$(this).css("height", load_height + 'px');
+		// });
+	})
+	</script>
+</head>
+<body>
 <?php
 include("header.php");
 ?>
-		<img src="logo_simple.jpg" class="nadpis">
-		<!-- Zde začíná kód pro výpis aktuálních tasks, řadí se podle data, důležitosti a osoby, ke které směřují -->
-		<div class="main">
-			<table>
-			<tr>
-			<td id="task_cell">
+ 	<div id="task_list">
+ 		<h1 class="center">Přehled úkolů</h1>
+		<div id="list">
+			<h3>Moje úkoly:</h3>
 			<?php
-			if($tasks){
-				$vykresleno = false;
-				for($i=0;$i<count($tasks);$i++){
-					if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
-					if($tasks[$i]["target"] == $_COOKIE["user"]){
-						echo "<div class='task' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
-						echo "<table class='zahlavi_tab'>";
-						echo "<tr>";
-						echo "<td class='zahlavi'>Jméno</td>";
-						echo "<td class='zahlavi_val'>".$tasks[$i]["name"]."</td>";
-						echo "<td class='zahlavi'>Důležitost</td>";
-						echo "<td class='zahlavi_val' style='color: ".getImportanceColor($tasks[$i]["importancy"])."'>".$tasks[$i]["importancy"]."</td>";
-						echo "</tr><tr>";
-						echo "<td class='zahlavi'>Splnit do</td>";
-						if($tasks[$i]["duration"]){echo "<td class='zahlavi_val'  style='color: ".getDeadlineColor($tasks[$i])."'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</td>";}
-						else{echo "<td class='zahlavi_val'>Libovolně dlouho</td>";}
-						echo "</tr></table>";
-						echo $tasks[$i]["description"];
-						echo "</div>";
-						$vykresleno = true;
+				function sklonuj($cislo, $varianty){
+					if($cislo == 1){
+						return $cislo . " " . $varianty[0];
+					}
+					elseif($cislo > 1 && $cislo < 5){
+						return $cislo . " " . $varianty[1];
+					}
+					else {
+						return $cislo . " " . $varianty[2];
+					}
+				}
+				function parseDuration($duration, $date){
+					$zbyva = ($duration + $date) - time();
+					$output = "";
+					// return "do "  . $zbyva;
+					if($zbyva < 60){
+						$output .= sklonuj($zbyva,array("sekunda","sekundy","sekund"));
+					}
+					elseif($zbyva/60 < 60){
+						$output .= sklonuj(round($zbyva/60),array("minuta","minuty","minut"));
+					}
+					elseif($zbyva/60/60 < 24){
+						$output .= sklonuj(round($zbyva/60/60),array("hodina","hodiny","hodin"));
+					}
+					elseif($zbyva/60/60/24 < 7){
+						$output .= sklonuj(round($zbyva/60/60/24),array("den", "dny", "dní"));
+					}
+					elseif($zbyva/60/60/24/7 < 4){
+						$output .= sklonuj(round($zbyva/60/60/24/7),array("týden","týdny","týdnů"));
+					}
+					else {
+						$output .= $zbyva;
+					}
+					return $output;
+				}
+				function parseTask($task){
+					echo "<div class='task indent' data-date='".$task["date"]."'>";
+					echo "<div class='name'>" . shorten($task["name"], 25) . "</div>";
+					echo "<div class='target'>Přiřazený člen: <span class='important'>".$task["target"]."</span></div>";
+					if( $task["duration"] ){
+						echo "<div>Zbývající čas: <span class='important'>".parseDuration($task["duration"], $task["date"])."</span></div>";
+						// style='color: ".getdeadlineColor($task).";'
+					}
+					else {
+						echo "<div>Zbývající čas: <span class='important'>Neomezeně</span></div>";
+					}
+					echo "<div>Priorita: <span class='important'>".$task["importancy"]."</span></div>";
+					echo "<div>Zadavatel: <span class='important'>".$task["creator"]."</span></div>";
+					if( isset($task["domain"]) ){
+						echo "<div>Obor: <span class='important'>".$task["domain"]."</span></div>";
+					}
+					else {
+						echo "<div>Obor: <span class='important'>Neuveden</span></div>";
+					}
+					echo "<div>Čas vytvoření: <span class='important'>".date("d.m.Y G:i",$task["date"])."</span></div>";
+					echo "<div>".$task["description"]."</div>";
+					echo "</div>";
+				}
+
+				if($tasks){
+					$count = 0;
+					for($i=0;$i<count($tasks);$i++){
+						if($tasks[$i]["target"] != $_COOKIE["user"]){
+							continue;
+						}
+						parseTask($tasks[$i]);
+						$count++;
+					};
+					if($count === 0){
+						echo "<div class='indent'>Nemáte žádné úkoly.</div>";
 					}
 				};
-			}
-			if(!$vykresleno){
-				echo "<div id='prazdny'>Nemáte žádné úkoly</div>";
-			}
 			?>
-			</td>
-			<!-- Zde se vytváří zjednodušený seznam VŠECH aktuálních úkolů, pouze dle data vytvoření a dokončení -->
-			<td style="vertical-align: top;">
-				<p>
-					<a href="new_task.php">Nový úkol</a>
-					<a href="sklad/sklad.php">Skladiště</a>
-				</p>
-				<div class="seznam">
-					<span style='position: relative;' class="zahlavi_seznam">Jméno</span>
-					<span style='position: absolute; left: 90px;' class="zahlavi_seznam">Komu</span>
-					<span style='position: absolute; left: 200px;' class="zahlavi_seznam">Důležitost</span>
-					<span style='position: absolute; left: 300px;' class="zahlavi_seznam">Vytvořil</span>
-					<span style='position: absolute; left: 400px;' class="zahlavi_seznam">Obor</span>
-					<span style='position: absolute; left: 550px;' class="zahlavi_seznam">Vytvořeno</span>
-					<span style='position: absolute; left: 700px;' class="zahlavi_seznam">Splnit do</span>
-				</div><?php
+			<h3>Ostatní úkoly:</h3>
+			<?php
 				if($tasks){
 					for($i=0;$i<count($tasks);$i++){
-						if(!isset($tasks[$i]["name"]) || $tasks[$i]["name"] == "") continue;
-							echo "<div class='seznam' onclick=\"location.href='task.php?id=".$tasks[$i]["date"]."'\">";
-						if(strlen($tasks[$i]["name"]) > 10){ echo "<span style='position: relative;'>".substr($tasks[$i]["name"],0,10)." ...</span>";}
-						else{ echo "<span style='position: relative;'>".$tasks[$i]["name"]."</span>";}
-						if(strlen($tasks[$i]["target"]) > 10){ echo "<span style='position: absolute; left: 90px;'>".substr($tasks[$i]["target"],0,10)." ...</span>";}
-						else{ echo "<span style='position: absolute; left: 90px;'>".$tasks[$i]["target"]."</span>";}
-						echo "<span style='position: absolute; left: 200px;'>".$tasks[$i]["importancy"]."</span>";
-						echo "<span style='position: absolute; left: 300px;'>".$tasks[$i]["creator"]."</span>";
-						if(isset($tasks[$i]["domain"])){echo "<span style='position: absolute; left: 400px;'>".$tasks[$i]["domain"]."</span>";}
-						else{echo "<span style='position: absolute; left: 400px;'>Neuveden</span>";}
-						echo "<span style='position: absolute; left: 550px;'>".date("d.m.Y G:i",$tasks[$i]["date"])."</span>";
-						if($tasks[$i]["duration"]) echo "<span style='position: absolute; left: 700px; color: ".getDeadlineColor($tasks[$i]).";'>".getDeadline($tasks[$i]["duration"],$tasks[$i]["date"])."</span>";
-						else echo "<span style='position: absolute; left: 700px;'>Libovolně dlouho</span>";
-						echo "</div>";
+						if($tasks[$i]["target"] == $_COOKIE["user"]){
+							continue;
+						}
+						parseTask($tasks[$i]);
 					};
-				}
-				?>
-			</td>
-			</tr>
-		</div>
-	</body>
+				};
+			?>
+		</table>
+	</div>
+</body>
 </html>

@@ -20,6 +20,15 @@ function getTasks( $rest , $tasks_file ){
 	else return false;
 };
 
+function shorten($str, $length){
+	if(strlen($str) > $length){
+		return substr($str, 0, $length-3)."...";
+	}
+	else {
+		return $str;
+	}
+}
+
 function getTask($crTime, $tasks_file){
 	$pole = getTasks(false, $tasks_file);
 	for($i=0;$i<count($pole);$i++){

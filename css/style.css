@@ -49,9 +49,10 @@ input {
 	background: linear-gradient(#666666 0%,#505050 100%); /* W3C */
 }
 .upperbar .name {
-	float:left;
+	float: left;
 	margin-right:50px;
 	font-family: "OpenSansExtrabold";
+	text-shadow: 1px 1px 2px #444;
 }
 .upperbar .navigation {
 	padding:0;
@@ -91,6 +92,10 @@ input {
 }
 .important {
 	color:#24B34A;
+}
+.indent {
+	margin-left:20px;
+	margin-right:20px;
 }
 /* ==========================================================================
    Nový úkol
@@ -143,4 +148,56 @@ input {
 #new_task .send:hover {
 	box-shadow: 0 0 6px #222;
 	background-image: linear-gradient(#58EF7E 0%,#4EB267 100%);
+}
+
+/* ==========================================================================
+   Výpis
+   ========================================================================== */
+
+#task_list {
+	width: 80%;
+	position: relative;
+
+	margin:0px auto;
+
+	padding: 20px 10px 40px 10px;
+
+	/*border:2px #666 solid;*/
+	border-radius: 10px;
+	box-shadow: 0 0 3px #333;
+	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+}
+
+#task_list h1 {
+	padding:0;
+	margin:0;
+	margin-bottom:20px;
+	font-size:36pt;
+	color:#505050;
+	text-shadow: 1px 1px 1px #888;
+}
+
+#task_list .task:hover {
+	height:200px;
+}
+
+#task_list .task {
+	border-radius: 10px;
+	box-shadow: 0 0 3px #333;
+	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+	margin:0 auto;
+	margin-bottom:20px;
+	width:70%;
+	height:50px;
+	overflow: hidden;
+
+	transition: height 0.5s;
+}
+
+#task_list .task .name {
+	font-size:18pt;
+	line-height: 50px;
+	margin-left: 20px;
+	margin-right: 20px;
+	float:left;
 }
