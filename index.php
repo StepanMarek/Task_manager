@@ -39,6 +39,7 @@ $tasks = getTasks(false , "tasks.txt");
 		// 	console.log(load_height)
 		// 	$(this).css("height", load_height + 'px');
 		// });
+		$("#task_list").height($("#task_list").height()+250)
 	})
 	</script>
 </head>
@@ -65,7 +66,6 @@ include("header.php");
 				function parseDuration($duration, $date){
 					$zbyva = ($duration + $date) - time();
 					$output = "";
-					// return "do "  . $zbyva;
 					if($zbyva < 60){
 						$output .= sklonuj($zbyva,array("sekunda","sekundy","sekund"));
 					}
@@ -88,11 +88,14 @@ include("header.php");
 				}
 				function parseTask($task){
 					echo "<div class='task indent' data-date='".$task["date"]."'>";
-					echo "<div class='name'>" . shorten($task["name"], 25) . "</div>";
+
+					echo "<div class='remover' title='Odstranit úkol'></div>";
+					echo "<div class='completer' title='Dokončit úkol'></div>";
+
+					echo "<div class='name'>" . shorten($task["name"], 22) . "</div>";
 					echo "<div class='target'>Přiřazený člen: <span class='important'>".$task["target"]."</span></div>";
 					if( $task["duration"] ){
 						echo "<div>Zbývající čas: <span class='important'>".parseDuration($task["duration"], $task["date"])."</span></div>";
-						// style='color: ".getdeadlineColor($task).";'
 					}
 					else {
 						echo "<div>Zbývající čas: <span class='important'>Neomezeně</span></div>";
@@ -116,26 +119,45 @@ include("header.php");
 						if($tasks[$i]["target"] != $_COOKIE["user"]){
 							continue;
 						}
+						if($count % 2 == 0){
+							if($count != 0) echo "</div>";
+							echo "<div class='double'>";
+						}
 						parseTask($tasks[$i]);
 						$count++;
 					};
+					
+					if($count % 2 != 0){
+						echo "</div>";
+					}
 					if($count === 0){
 						echo "<div class='indent'>Nemáte žádné úkoly.</div>";
 					}
 				};
 			?>
+			<div class="cleaner"></div>
 			<h3>Ostatní úkoly:</h3>
 			<?php
 				if($tasks){
+					$count = 0;
 					for($i=0;$i<count($tasks);$i++){
 						if($tasks[$i]["target"] == $_COOKIE["user"]){
 							continue;
 						}
+						if($count % 2 == 0){
+							if($count != 0) echo "</div><div class='cleaner'></div>";
+							echo "<div class='double'>";
+						}
 						parseTask($tasks[$i]);
+						$count++;
 					};
+					if($count % 2 != 0){
+						echo "</div>";
+					}
 				};
 			?>
-		</table>
+
+		</div>
 	</div>
 </body>
 </html>

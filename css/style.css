@@ -97,6 +97,9 @@ input {
 	margin-left:20px;
 	margin-right:20px;
 }
+.cleaner {
+	clear: both;
+}
 /* ==========================================================================
    Nový úkol
    ========================================================================== */
@@ -116,7 +119,6 @@ input {
 
 	padding: 20px 0 40px 0;
 
-	/*border:2px #666 solid;*/
 	border-radius: 10px;
 	box-shadow: 0 0 3px #333;
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
@@ -162,7 +164,6 @@ input {
 
 	padding: 20px 10px 40px 10px;
 
-	/*border:2px #666 solid;*/
 	border-radius: 10px;
 	box-shadow: 0 0 3px #333;
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
@@ -177,21 +178,61 @@ input {
 	text-shadow: 1px 1px 1px #888;
 }
 
+
+
+#task_list .double {
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	position:relative;
+	width:95%;
+	height:50px;
+}
+
 #task_list .task:hover {
-	height:200px;
+	height:300px;
 }
 
 #task_list .task {
 	border-radius: 10px;
 	box-shadow: 0 0 3px #333;
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
-	margin:0 auto;
-	margin-bottom:20px;
-	width:70%;
+	width:45%;
+	float:left;
 	height:50px;
 	overflow: hidden;
 
+	position:relative;
+
 	transition: height 0.5s;
+}
+
+#task_list .task .remover, #task_list .task .completer {
+	background-image:url("../images/yesno.png");
+	
+	width:16px;
+	height:16px;
+	position:absolute;
+	top:4px;
+
+	opacity: 0.4;
+	transition:opacity 0.7s;
+
+	cursor: pointer;
+}
+
+#task_list .task .remover {
+	background-position: 0 16px;
+	right:4px;
+}
+
+#task_list .task .completer {
+	top:3px;
+	right:26px;
+}
+
+#task_list .task .completer:hover, #task_list .task .remover:hover {
+	opacity:1;
 }
 
 #task_list .task .name {

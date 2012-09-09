@@ -21,8 +21,8 @@ function getTasks( $rest , $tasks_file ){
 };
 
 function shorten($str, $length){
-	if(strlen($str) > $length){
-		return substr($str, 0, $length-3)."...";
+	if(mb_strlen($str) > $length){
+		return mb_substr($str, 0, $length-3)."...";
 	}
 	else {
 		return $str;
