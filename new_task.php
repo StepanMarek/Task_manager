@@ -25,6 +25,7 @@ function saveTask($post_array, $tasks_file){
 		$attach_str .= $_FILES["attachement"]["type"]."?:";
 		$attach_str .= $_FILES["attachement"]["name"]."?:";
 		$attach_str .= "Příloha k úkolu ".$post_array["name"]."?:";
+		$attach_str .= $post_array["tags"]."?:";
 		$attach_str .= $cas_ted;
 		$sid = fopen("./sklad/105110102111", "a");
 		fwrite($sid, $attach_str);
@@ -97,6 +98,21 @@ else{
 		var quote = obors[Math.floor(obors.length*Math.random())];
 		dom.placeholder = quote;
 	}
+	function zobrazitTagy(){
+		var tr = document.getElementById("mistoProTagy");
+		var td1 = document.createElement("td");
+		var td2 = document.createElement("td");
+		var input = document.createElement("input");
+		td1.className = "zahlavi";
+		td1.innerHTML = "Tagy";
+		input.type = "text";
+		input.className = "long";
+		input.name = "tags";
+		input.placeholder = "oddělujte mezerami, např: animace třída questy gui apod.";
+		td2.appendChild(input);
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+	};
 	
 	var bg;
 	$(document).ready(function(){
@@ -144,6 +160,8 @@ include("header.php");
 						<option value="anyone">Kdokoli</option>
 						<option value="Štěpán">Štěpán</option>
 						<option value="Jirka">Jirka</option>
+						<option value="Hynek">Hynek</option>
+						<option value="Jan">Jan</option>
 					</select>
 				</td>
 			</tr>
@@ -185,8 +203,10 @@ include("header.php");
 					Příloha
 				</td>
 				<td>
-					<input type="file" name="attachement">
+					<input type="file" name="attachement" onchange="zobrazitTagy();">
 				</td>
+			</tr>
+			<tr id="mistoProTagy">
 			</tr>
 			<tr>
 				<td colspan="2" class="center">
