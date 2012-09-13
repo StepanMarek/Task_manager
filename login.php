@@ -20,7 +20,7 @@ if($form_sent){
 		$bad["password"] = "Špatné heslo";
 	}
 	else{
-		setcookie("id",$_SERVER["REMOTE_ADDR"],time()+60*15);
+		setcookie("id",hash("sha256",$login_by_post["name"]),time()+60*15);
 		setcookie("user",$login_by_post["name"]);
 		header("Location: index.php");
 	}

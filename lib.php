@@ -126,14 +126,17 @@ function login_user($id,$passw){
 	return $pole;
 };
 
-function logged( $addr ){
+function logged( $user ){
 	if(isset($_COOKIE["id"])){
-		if($_COOKIE["id"] == $addr)
+		if($_COOKIE["id"] == hash("sha256",$user))
 			return true;
 		else return false;
 	}
 };
 
+function prodlouzit( $cookId ){
+	setcookie($cookId,$_COOKIE[$cookId],time()+60*15);
+};
 /* Funkce pro práci se soubory */
 function getDirArray($file_name, $rest){
 	$poradi = ["name","link","importancy","type","download","description","tags","date"];
