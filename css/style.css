@@ -242,7 +242,6 @@ input {
 }
 
 #task_list .task .name {
-	font-size:18pt;
 	line-height: 50px;
 	margin-left: 20px;
 	margin-right: 20px;
@@ -285,7 +284,7 @@ input {
    Sklad
    ========================================================================== */
 
-.file {
+.file, .filtering {
 	overflow: hidden;
 	padding:5px;
 	width:80%;
@@ -296,25 +295,26 @@ input {
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
 	position:relative;
 
-	cursor:pointer;
 	transition: height 1s;
+}
+.filtering {
+	text-align: center;
 }
 
 .file span {
 	margin-right:50px;
 	float:left;
 	display:block;
-	width:300px;
 }
 
-.file .moreinfo {
-	display: none;
+.file .name {
+	font-size:18pt;
 }
 
 .file .download form {
 	margin:0;padding:0;
 	position:absolute;
-	top:3px;
+	top:20px;
 	right:10px;
 }
 
@@ -330,4 +330,8 @@ input {
 .file .odkaz:hover {
 	box-shadow: 0 0 6px #222;
 	background-image: linear-gradient(#58EF7E 0%,#4EB267 100%);
+}
+
+.file .icon {
+	float:left;
 }
