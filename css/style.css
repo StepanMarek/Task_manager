@@ -290,9 +290,11 @@ input {
 	padding:5px;
 	width:80%;
 	margin:0 auto;
+	margin-bottom:10px;
 	border-radius: 10px;
 	box-shadow: 0 0 5px #666;
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+	position:relative;
 
 	cursor:pointer;
 	transition: height 1s;
@@ -300,8 +302,32 @@ input {
 
 .file span {
 	margin-right:50px;
+	float:left;
+	display:block;
+	width:300px;
 }
 
 .file .moreinfo {
 	display: none;
+}
+
+.file .download form {
+	margin:0;padding:0;
+	position:absolute;
+	top:3px;
+	right:10px;
+}
+
+.file .odkaz {
+	border:0px transparent none;
+	height:50px;
+	font-size: 15pt;
+	background-image: linear-gradient(#32f262 0%,#24b34a 100%);
+	box-shadow: 0 0 4px #666;
+	transition: box-shadow 0.5s;
+}
+
+.file .odkaz:hover {
+	box-shadow: 0 0 6px #222;
+	background-image: linear-gradient(#58EF7E 0%,#4EB267 100%);
 }

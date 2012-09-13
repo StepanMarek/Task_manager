@@ -29,11 +29,11 @@ if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<title>Nový soubor</title>
 		<script src="javascript/prefixfree.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
-		<title>Nový soubor</title>
+		<script src="javascript/game_of_life.js"></script>
 		<script>
 		var bg;
 		$(document).ready(function(){
@@ -66,7 +66,7 @@ if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){
 					Vyberte soubor
 				</td>
 				<td>
-					<input type="file" name="attachement" required>
+					<input required type="file" name="attachement">
 				</td>
 			</tr>
 			<tr>
@@ -86,7 +86,7 @@ if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){
 				</td>
 			</tr>
 			<tr>
-				<td class="zahlavi important">
+				<td class="zahlavi">
 					Důležitost
 				</td>
 				<td>
