@@ -67,7 +67,7 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 				<img class='icon' src='http://www.stdicon.com/".$pole_zaloh[$i]["download"]."?size=92&default=http://www.stdicon.com/application/octet-stream'>
 				<span class='name'>".$pole_zaloh[$i]["name"]."</span>
 				<span class='tags'><span class='important'>Tagy:</span> ".implode(", ", explode(" ", $pole_zaloh[$i]["tags"]))."</span><br>
-				<span class='date'><span class='important'>Přidáno</span> ".date("d.m.Y G:i",$pole_zaloh[$i]["date"])."</span>
+				<span class='date'><span class='important'>Přidáno</span> ".date("d.m.Y G:i",intval($pole_zaloh[$i]["date"]))."</span>
 				<span class='download'>";
 		
 			if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
