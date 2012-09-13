@@ -6,9 +6,10 @@ if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 }
 
 if(isset($_POST["id"])){
-	if(puvodni($_POST["id"]))
+	if(puvodni($_POST["id"])){
 		header("Content-Disposition: attachement; filename='".$_POST["id"]."'");
-		readfile($_POST["id"]);
+		readfile("./sklad/".$_POST["id"]);
+	}
 };
 
 date_default_timezone_set("Europe/Prague");
@@ -77,9 +78,9 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 				echo "<div class=\"seznam\">
 					<span style='position: relative;'>".$pole_zaloh[$i]["name"]."</span>
 					<span style='position: absolute; left: 120px;'>".$linktask."</span>
-					<span style='position: absolute; left: 250px;'>".$pole_zaloh[$i]["importancy"]."</span>
-					<span style='position: absolute; left: 350px;'>".$pole_zaloh[$i]["type"]."</span>
-					<span style='position: absolute; left: 550px;'>";
+					<span style='position: absolute; left: 300px;'>".$pole_zaloh[$i]["importancy"]."</span>
+					<span style='position: absolute; left: 400px;'>".shorten($pole_zaloh[$i]["type"], 29)."</span>
+					<span style='position: absolute; left: 650px;'>";
 			
 				if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
 					echo	"<form method='post' action='sklad.php'>
@@ -92,7 +93,7 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 				}
 				
 				echo	"</span>
-					<span style='position: absolute; left: 750px;'>".$pole_zaloh[$i]["description"]."</span>
+					<span style='position: absolute; left: 750px;'>".shorten($pole_zaloh[$i]["description"],22)."</span>
 					<span style='position: absolute; left: 1000px;'>".date("d.m.Y G:i",$pole_zaloh[$i]["date"])."</span>
 					</div>";
 				}

@@ -9,7 +9,7 @@ function getTasks( $rest , $tasks_file ){
 		for($i=0;$i<count($pole);$i++){
 			$mezi = explode("?:", $pole[$i]);
 			$asoc = [];
-			for($j=0;$j<count($mezi);$j++){
+			for($j=0;$j<count($mezi) && $j < count($poradi);$j++){
 				$asoc[$poradi[$j]] = $mezi[$j];
 			};
 			$vysledek[$i] = $asoc;
@@ -93,7 +93,7 @@ function logged( $addr ){
 
 /* Funkce pro práci se soubory */
 function getDirArray($file_name, $rest){
-	$poradi = ["name","link","importancy","type","download","description","date"];
+	$poradi = ["name","link","importancy","type","download","description","tags","date"];
 	if(filesize($file_name) > 0){
 		$sid = fopen($file_name, "r");
 		$pole = explode("\n",fread($sid,filesize($file_name)));
@@ -119,7 +119,7 @@ function getDirArray($file_name, $rest){
 }
 
 function puvodni($filename){
-	if(!is_file($filename))
+	if(!is_file("sklad/".$filename))
 		return false;
 	if(strpos($filename,"./"))
 		return false;
