@@ -60,7 +60,7 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 			echo "<div class='file' data-src='". $pole_zaloh[$i]["download"] ."' data-tags=''>
 				<span class='name'>".$pole_zaloh[$i]["name"]."</span>
 				<span class='tags'>Tagy: ".implode(", ", explode(" ", $pole_zaloh[$i]["tags"]))."</span>
-				<span class='date'>Přidáno ".date("d.m.Y G:i",$pole_zaloh[$i]["date"])."</span>
+				<span class='date'>Přidáno ".date("d.m.Y G:i",intval($pole_zaloh[$i]["date"]))."</span>
 				<span class='download'>";
 		
 			if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
