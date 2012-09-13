@@ -57,6 +57,25 @@ function getDeadlineColor($obj){
 	else return "black";
 };
 
+function deleteTask( $neco ){
+	$sid = fopen("tasks.txt","r");
+	$velke_pole = explode("?:;",fread($sid,filesize("tasks.txt")));
+	$novy_soubor = "";
+	for($i = 0;$i<count($velke_pole);$i++){
+		if( $neco == explode("?:", $velke_pole[$i])[0] )
+			continue;
+		else{
+			if($i != 0)
+				$novy_soubor.="?:;";
+			$novy_soubor.=$velke_pole[$i];
+		}
+	}
+	fclose($sid);
+	$sid = fopen("tasks.txt","w");
+	fwrite($sid, $novy_soubor);
+	fclose($sid);
+};
+
 /* Funkce pro práci s uživately */
 function user_exists( $id ){
 	$sid = fopen("12157914","r");
