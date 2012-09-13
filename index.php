@@ -11,6 +11,12 @@ if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
 	exit;
 }
 
+/*if(isset($_POST["toDel"]))
+	deleteTask($_POST["toDel"]);*/
+	
+if(isset($_POST["toFinish"]))
+	finishTask($_POST["toFinish"]);
+
 date_default_timezone_set("Europe/Prague");
 $tasks = getTasks(false , "tasks.txt");
 ?>
@@ -41,6 +47,11 @@ $tasks = getTasks(false , "tasks.txt");
 		// });
 		$("#task_list").height($("#task_list").height()+250)
 	})
+	
+	function trySubmit(form){
+		if(confirm("Opravdu smazat "+form.children[0].value+"?"))
+			form.submit();
+	};
 	</script>
 </head>
 <body>
@@ -98,8 +109,8 @@ include("header.php");
 
 					echo "<div class='task indent ".($task["duration"] < 0 ? "completed" : "")."' data-date='".$task["date"]."'>";
 
-					echo "<div class='remover' title='Odstranit úkol'></div>";
-					echo "<div class='completer' title='Dokončit úkol'></div>";
+					echo "<div class='remover' title='Odstranit úkol' onclick='trySubmit(this.children[0]);'><form method='post' action='index.php'><input type='hidden' value='".$task["name"]."' name='toDel'></form></div>";
+					echo "<div class='completer' title='Dokončit úkol' onclick='this.children[0].submit();'><form method='post' action='index.php'><input type='hidden' value='".$task["name"]."' name='toFinish'></form></div>";
 
 					echo "<div class='name'>" . $shortname . "</div>";
 					echo "<div class='target'>Přiřazený člen: <span class='important'>".$task["target"]."</span></div>";

@@ -21,8 +21,8 @@ function getTasks( $rest , $tasks_file ){
 };
 
 function shorten($str, $length){
-	if(mb_strlen($str) > $length){
-		return mb_substr($str, 0, $length-3)."...";
+	if(strlen($str) > $length){
+		return substr($str, 0, $length-3)."...";
 	}
 	else {
 		return $str;
@@ -55,6 +55,49 @@ function getDeadlineColor($obj){
 	if(time()>$obj["duration"]+$obj["date"] && $obj["duration"])
 		return "red";
 	else return "black";
+};
+
+function deleteTask( $neco ){
+	$sid = fopen("tasks.txt","r");
+	$velke_pole = explode("?:;",fread($sid,filesize("tasks.txt")));
+	$novy_soubor = "";
+	for($i = 0;$i<count($velke_pole);$i++){
+		if( $neco == explode("?:", $velke_pole[$i])[0] )
+			continue;
+		else{
+			if($i != 0)
+				$novy_soubor.="?:;";
+			$novy_soubor.=$velke_pole[$i];
+		}
+	}
+	fclose($sid);
+	$sid = fopen("tasks.txt","w");
+	fwrite($sid, $novy_soubor);
+	fclose($sid);
+};
+
+function finishTask( $neco ){
+	$sid = fopen("tasks.txt","r");
+	$velke_pole = explode("?:;",fread($sid,filesize("tasks.txt")));
+	$novy_soubor = "";
+	for($i = 0;$i<count($velke_pole);$i++){
+	$male_pole = explode("?:", $velke_pole[$i]);
+		if( $neco == $male_pole[0] ){
+			$male_pole[5] = -1;
+			if($i != 0)
+				$novy_soubor.="?:;";
+			$novy_soubor.= implode("?:",$male_pole);
+		}
+		else{
+			if($i != 0)
+				$novy_soubor.="?:;";
+			$novy_soubor.=$velke_pole[$i];
+		}
+	}
+	fclose($sid);
+	$sid = fopen("tasks.txt","w");
+	fwrite($sid, $novy_soubor);
+	fclose($sid);
 };
 
 /* Funkce pro práci s uživately */
