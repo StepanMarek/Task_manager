@@ -17,26 +17,57 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="javascript/prefixfree.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+		<script src="./javascript/game_of_life.js"></script>
+		<script>
+		$(document).ready(function(){
+			bg = new GOLBackground( document.body, 256, 256, 6, 2);
+			bg.update(20);
+			bg.render();
+
+			// rozbalovací files
+			$(".file").on("click",function(){
+				var moreinfo = $(this).children(".moreinfo")
+				if( moreinfo.css("display") == "none" ){
+					moreinfo.css("display", "block");
+				}
+				else {
+					moreinfo.css("display", "none");
+				}
+			})
+		})
+		</script>
 		<title>Skladiště</title>
 	</head>
 	<body>
-<?php
-include("header.php");
-?>
-	<div style="width: 99%;position: absolute; left: 0.5%;">
-		<div class="seznam">
-			<span style='position: relative;' class="zahlavi_seznam">Jméno</span>
-			<span style='position: absolute; left: 120px;' class="zahlavi_seznam">K Úkolu</span>
-			<span style='position: absolute; left: 250px;' class="zahlavi_seznam">Důležitost</span>
-			<span style='position: absolute; left: 350px;' class="zahlavi_seznam">Typ</span>
-			<span style='position: absolute; left: 550px;' class="zahlavi_seznam">Stáhnout/Odkaz na soubor</span>
-			<span style='position: absolute; left: 750px;' class="zahlavi_seznam">Popis</span>
-			<span style='position: absolute; left: 1000px;' class="zahlavi_seznam">Vytvořeno</span>
+	<?php
+	include("header.php");
+	?>
+	<form>
+		Filtrovat podle tagů: <input type="text" placeholder="modely, dolni-patra, budova">
+		<input type="submit" value="Filtrovat">
+	</form>
+
+	<div class="file" data-src="sklad/kostel.jpg" data-tags="modely, budova, dolni-patra">
+		<span class="name">Kostel</span>
+		<span class="tags">Tagy: modely, budova, dolni-patra</span>
+		<span class="date">Přidáno 12. 8. 2012</span>
+		<span class="author">Přidal: Jan</span>
+		<span class="download">Download</span>
+		<div class="moreinfo">
+			<span class="size">Velikost: 324kB</span>
+			<span class="task">K Úkolu: Žádný</span>
+			<span class="description">Popis: Model kostela, neotexturovaný</span><br>
+			<span class="preview">
+				<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kostel_Sv._Gorazda.jpg/170px-Kostel_Sv._Gorazda.jpg"></img>
+			</span>
 		</div>
+	</div>
+	
+<br><br><br>
+	<div style="width: 99%;position: absolute; left: 0.5%;">
 		<?php 
 		if($pole_zaloh){
 			for($i=0;$i<count($pole_zaloh);$i++){

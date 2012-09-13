@@ -27,6 +27,36 @@ if($form_sent){
 }
 ?>
 <html>
+<head>
+	<meta charset="utf-8">
+
+
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<title>Přihlášení</title>
+
+	<script src="./javascript/prefixfree.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+	<script src="./javascript/game_of_life.js"></script>
+	<script>
+	$(document).ready(function(){
+		bg = new GOLBackground( document.body, 256, 256, 6, 2);
+		bg.update(20);
+		bg.render();
+	})
+	</script>
+</head>
+<body>
+	<div id="prihlaseni" style=<?php if( isset($bad["name"]) || isset($bad["password"]) ) echo "'box-shadow: 0 0 10px #F00;'"?>>
+		<form method="POST" action="login.php">
+			Jméno: <br><input type="text" name="jmeno"><br>
+			Heslo: <br><input type="password" name="heslo"><br>
+			<input class="send" type="submit" value="Přihlásit se do systému">
+		</form>
+	</div>	
+</body>
+</html>
+
+<!-- <html>
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles.css">
@@ -41,4 +71,4 @@ if($form_sent){
 		</form>
 	</div>
 	</body>
-</html>
+</html> -->

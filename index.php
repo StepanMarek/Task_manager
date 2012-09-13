@@ -64,9 +64,16 @@ include("header.php");
 					}
 				}
 				function parseDuration($duration, $date){
+					if($duration < 0){
+						return "Dokončeno";
+					}
 					$zbyva = ($duration + $date) - time();
 					$output = "";
-					if($zbyva < 60){
+
+					if($zbyva < 0){
+						$output .= "Vypršel";
+					}
+					elseif($zbyva < 60){
 						$output .= sklonuj($zbyva,array("sekunda","sekundy","sekund"));
 					}
 					elseif($zbyva/60 < 60){
@@ -87,12 +94,14 @@ include("header.php");
 					return $output;
 				}
 				function parseTask($task){
-					echo "<div class='task indent' data-date='".$task["date"]."'>";
+					$shortname = shorten($task["name"], 18);
+
+					echo "<div class='task indent ".($task["duration"] < 0 ? "completed" : "")."' data-date='".$task["date"]."'>";
 
 					echo "<div class='remover' title='Odstranit úkol'></div>";
 					echo "<div class='completer' title='Dokončit úkol'></div>";
 
-					echo "<div class='name'>" . shorten($task["name"], 22) . "</div>";
+					echo "<div class='name'>" . $shortname . "</div>";
 					echo "<div class='target'>Přiřazený člen: <span class='important'>".$task["target"]."</span></div>";
 					if( $task["duration"] ){
 						echo "<div>Zbývající čas: <span class='important'>".parseDuration($task["duration"], $task["date"])."</span></div>";
@@ -101,6 +110,8 @@ include("header.php");
 						echo "<div>Zbývající čas: <span class='important'>Neomezeně</span></div>";
 					}
 					echo "<div>Priorita: <span class='important'>".$task["importancy"]."</span></div>";
+					if($shortname != $task["name"])
+						echo "<div>Celý název: <span class='important'>".$task["name"]."</span></div>";
 					echo "<div>Zadavatel: <span class='important'>".$task["creator"]."</span></div>";
 					if( isset($task["domain"]) ){
 						echo "<div>Obor: <span class='important'>".$task["domain"]."</span></div>";
@@ -114,22 +125,28 @@ include("header.php");
 				}
 
 				if($tasks){
+					$length = 0;
+					for($i=0;$i<count($tasks);$i++){
+						if($tasks[$i]["target"] != $_COOKIE["user"]){
+							$length++;
+						}
+					}
+
 					$count = 0;
+
+					echo "<div class='polovina'>";
+
 					for($i=0;$i<count($tasks);$i++){
 						if($tasks[$i]["target"] != $_COOKIE["user"]){
 							continue;
 						}
-						if($count % 2 == 0){
-							if($count != 0) echo "</div>";
-							echo "<div class='double'>";
-						}
+						if($count == ceil($length/2))
+							echo "</div><div class='polovina'>";
 						parseTask($tasks[$i]);
 						$count++;
 					};
-					
-					if($count % 2 != 0){
-						echo "</div>";
-					}
+					echo "</div>";
+					echo "<div class='cleaner'></div>";
 					if($count === 0){
 						echo "<div class='indent'>Nemáte žádné úkoly.</div>";
 					}
@@ -139,21 +156,25 @@ include("header.php");
 			<h3>Ostatní úkoly:</h3>
 			<?php
 				if($tasks){
+					$length = 0;
+					for($i=0;$i<count($tasks);$i++){
+						if($tasks[$i]["target"] != $_COOKIE["user"]){
+							$length++;
+						}
+					}
 					$count = 0;
+					echo "<div class='polovina'>";
 					for($i=0;$i<count($tasks);$i++){
 						if($tasks[$i]["target"] == $_COOKIE["user"]){
 							continue;
 						}
-						if($count % 2 == 0){
-							if($count != 0) echo "</div><div class='cleaner'></div>";
-							echo "<div class='double'>";
-						}
+						if($count == ceil($length/2))
+							echo "</div><div class='polovina'>";
 						parseTask($tasks[$i]);
 						$count++;
 					};
-					if($count % 2 != 0){
-						echo "</div>";
-					}
+					echo "</div>";
+					echo "<div class='cleaner'></div>";
 				};
 			?>
 

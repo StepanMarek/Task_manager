@@ -178,33 +178,31 @@ input {
 	text-shadow: 1px 1px 1px #888;
 }
 
-
-
-#task_list .double {
-	margin: 0 auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
+#task_list .polovina {
 	position:relative;
-	width:95%;
-	height:50px;
-}
-
-#task_list .task:hover {
-	height:300px;
+	width:47%;
+	margin:0 1%;
+	float:left;
 }
 
 #task_list .task {
 	border-radius: 10px;
 	box-shadow: 0 0 3px #333;
+	padding:0 4px;
+	margin:5px 0;
 	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
-	width:45%;
-	float:left;
+	width:100%;
 	height:50px;
 	overflow: hidden;
 
 	position:relative;
 
-	transition: height 0.5s;
+	transition: height 0.5s, opacity 0.5s;
+}
+
+#task_list .task:hover {
+	height:250px;
+	opacity: 1;
 }
 
 #task_list .task .remover, #task_list .task .completer {
@@ -231,6 +229,14 @@ input {
 	right:26px;
 }
 
+#task_list .completed {
+	box-shadow: 0 0 4px #24B34A;
+	opacity:0.5;
+}
+#task_list .completed .completer {
+	display:none;
+}
+
 #task_list .task .completer:hover, #task_list .task .remover:hover {
 	opacity:1;
 }
@@ -241,4 +247,61 @@ input {
 	margin-left: 20px;
 	margin-right: 20px;
 	float:left;
+}
+
+/* ==========================================================================
+   Přihlášení
+   ========================================================================== */
+
+#prihlaseni {
+	margin:10% auto;
+	padding:50px;
+	box-shadow: 0 0 5px #666;
+	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+	width:250px;
+	position:relative;
+}
+
+#prihlaseni input {
+	width:100%;
+}
+
+#prihlaseni .send {
+	margin-top:25px;
+	border:0px transparent none;
+	height:50px;
+	font-size: 15pt;
+	background-image: linear-gradient(#32f262 0%,#24b34a 100%);
+	box-shadow: 0 0 4px #666;
+	transition: box-shadow 0.5s;
+}
+
+#prihlaseni .send:hover {
+	box-shadow: 0 0 6px #222;
+	background-image: linear-gradient(#58EF7E 0%,#4EB267 100%);
+}
+
+/* ==========================================================================
+   Sklad
+   ========================================================================== */
+
+.file {
+	overflow: hidden;
+	padding:5px;
+	width:80%;
+	margin:0 auto;
+	border-radius: 10px;
+	box-shadow: 0 0 5px #666;
+	background-image: linear-gradient(#F9F9F9 30%,#EDEDED 100%);
+
+	cursor:pointer;
+	transition: height 1s;
+}
+
+.file span {
+	margin-right:50px;
+}
+
+.file .moreinfo {
+	display: none;
 }
