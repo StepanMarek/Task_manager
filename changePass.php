@@ -6,7 +6,10 @@ if(isset($_COOKIE["user"])){
 		exit;
 	}
 }
-else exit;
+else {
+	header("Location: login.php");
+	exit;
+}
 ?>
 <html>
 <head>

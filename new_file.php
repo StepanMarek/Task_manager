@@ -6,7 +6,11 @@ if(isset($_COOKIE["user"])){
 		exit;
 	}
 }
-else exit;
+else {
+	header("Location: login.php");
+	exit;
+}
+
 $cas_ted = time();
 $post_array = $_POST;
 if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){

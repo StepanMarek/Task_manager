@@ -11,7 +11,10 @@ if(isset($_COOKIE["user"])){
 		exit;
 	}
 }
-else exit;
+else {
+	header("Location: login.php");
+	exit;
+}
 
 if(isset($_POST["toDel"]))
 	deleteTask($_POST["toDel"]);

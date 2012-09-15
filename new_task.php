@@ -6,7 +6,10 @@ if(isset($_COOKIE["user"])){
 		exit;
 	}
 }
-else exit;
+else {
+	header("Location: login.php");
+	exit;
+}
 
 function saveTask($post_array, $tasks_file){
 	$months = [31,28,31,30,31,30,31,31,30,31,30,31];
