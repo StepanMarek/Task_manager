@@ -1,15 +1,15 @@
 <?php
-require("lib.php");
-if(isset($_COOKIE["user"])){
-	if(!logged($_COOKIE["user"])){
-		header("Location: login.php");
-		exit;
-	}
-}
-else {
-	header("Location: login.php");
-	exit;
-}
+// require("lib.php");
+// if(isset($_COOKIE["user"])){
+// 	if(!logged($_COOKIE["user"])){
+// 		header("Location: login.php");
+// 		exit;
+// 	}
+// }
+// else {
+// 	header("Location: login.php");
+// 	exit;
+// }
 ?>
 <html>
 <head>
@@ -36,7 +36,7 @@ else {
 	?>
 	<div id="prihlaseni" style="width:400px;">
 		<form method="POST" action="changePass.php">
-			Zadej nové heslo:<br><input type="text" name="heslo"><br>
+			Zadej nové heslo:<br><input type="password" name="heslo"><br>
 			<input class="send" type="submit" value="Vygenerovat hash">
 			<br>
 			<br>
