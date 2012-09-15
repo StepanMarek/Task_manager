@@ -1,9 +1,12 @@
 <?php
 require("lib.php");
-if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
-	header("Location: login.php");
-	exit;
+if(isset($_COOKIE["user"])){
+	if(!logged($_COOKIE["user"])){
+		header("Location: login.php");
+		exit;
+	}
 }
+else exit;
 $cas_ted = time();
 $post_array = $_POST;
 if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){

@@ -1,9 +1,12 @@
 <?php
 require("lib.php");
-if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
-	header("Location: login.php");
-	exit;
+if(isset($_COOKIE["user"])){
+	if(!logged($_COOKIE["user"])){
+		header("Location: login.php");
+		exit;
+	}
 }
+else exit;
 
 if(isset($_POST["id"])){
 	if(puvodni($_POST["id"])){

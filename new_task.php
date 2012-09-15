@@ -1,9 +1,12 @@
 <?php
 require("lib.php");
-if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
-	header("Location: login.php");
-	exit;
+if(isset($_COOKIE["user"])){
+	if(!logged($_COOKIE["user"])){
+		header("Location: login.php");
+		exit;
+	}
 }
+else exit;
 
 function saveTask($post_array, $tasks_file){
 	$months = [31,28,31,30,31,30,31,31,30,31,30,31];

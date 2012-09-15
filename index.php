@@ -5,14 +5,16 @@ pro hezké datum : "d.m.Y G:i"
 */
 
 require("lib.php");
-
-if(!logged($_SERVER["REMOTE_ADDR"]) || !isset($_COOKIE["user"])){
-	header("Location: login.php");
-	exit;
+if(isset($_COOKIE["user"])){
+	if(!logged($_COOKIE["user"])){
+		header("Location: login.php");
+		exit;
+	}
 }
+else exit;
 
-/*if(isset($_POST["toDel"]))
-	deleteTask($_POST["toDel"]);*/
+if(isset($_POST["toDel"]))
+	deleteTask($_POST["toDel"]);
 	
 if(isset($_POST["toFinish"]))
 	finishTask($_POST["toFinish"]);
