@@ -5,6 +5,7 @@
 		<li><a href="new_task.php">Nový úkol</a></li>
 		<li><a href="new_file.php">Nahrát soubor</a></li>
 		<li><a href="sklad.php">Skladiště</a></li>
+		<li><a href="changePass.php">Změna hesla</a></li>
 	</ul>
 </div>
 <div class="gap"></div>

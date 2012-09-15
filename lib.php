@@ -1,4 +1,7 @@
 <?php 
+$SALT = "ášlw%ě38+d§/)";
+
+
 /* Funkce pro práci s úkoly */
 function getTasks( $rest , $tasks_file ){
 	$poradi = ["name","date","target","description","attachement","duration","importancy","creator","domain"];
@@ -118,7 +121,7 @@ function login_user($id,$passw){
 	$pole = [];
 	for($i=0;$i<count($user_table);$i++){
 		$user_ids = explode(",",$user_table[$i]);
-		if($user_ids[0] == $id && $user_ids[1] == hash("sha256",$passw)){
+		if($user_ids[0] == $id && $user_ids[1] == hash("sha256",$passw . $SALT)){
 			return true;
 			break;
 		}

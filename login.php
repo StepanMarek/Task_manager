@@ -55,20 +55,3 @@ if($form_sent){
 	</div>	
 </body>
 </html>
-
-<!-- <html>
-	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<title>Přihlášení</title>
-	</head>
-	<body>
-	<div id="prihlaseni">
-		<form method="POST" action="login.php">
-			Jméno: <br><input type="text" name="jmeno"><br><?php if(isset($bad["name"])) echo "<span style='color: red'>".$bad["name"]."</span><br>"?>
-			Heslo: <br><input type="password" name="heslo"><br><?php if(isset($bad["password"])) echo "<span style='color: red'>".$bad["password"]."</span><br>"?>
-			<button type="submit">Přihlásit se do systému</button>
-		</form>
-	</div>
-	</body>
-</html> -->
