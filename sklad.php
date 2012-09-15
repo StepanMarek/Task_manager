@@ -58,7 +58,7 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 	</div>
 	<?php 
 	if($pole_zaloh){
-		for($i=0;$i<count($pole_zaloh);$i++){
+		for($i=count($pole_zaloh)-1;$i>=0;$i--){
 			if(getTask($pole_zaloh[$i]["link"], "tasks.txt")["name"])
 				$linktask = getTask($pole_zaloh[$i]["link"], "tasks.txt")["name"];
 			else $linktask = "Příloha není vázána";
