@@ -111,7 +111,7 @@ include("header.php");
 					return $output;
 				}
 				function parseTask($task){
-					$shortname = shorten($task["name"], 18);
+					$shortname = shorten($task["name"], 22);
 
 					echo "<div class='task indent ".($task["duration"] < 0 ? "completed" : "")."' data-date='".$task["date"]."'>";
 
