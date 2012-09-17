@@ -44,17 +44,18 @@ if(isset($_FILES["attachement"]) && $_FILES["attachement"]["size"] > 0){
 		<script src="javascript/game_of_life.js"></script>
 		<script>
 		var bg;
+		$(document).on("keyup",function(e){
+			if(e.keyCode == 121){
+				setInterval( function(){
+					bg.update(1);
+					bg.render();
+				}, 133 )
+			}
+		});
 		$(document).ready(function(){
 			bg = new GOLBackground( document.body, 256, 256, 6, 2);
 			bg.update(20);
 			bg.render();
-			// pro pohyblivé pozadí:
-			// setInterval( function(){
-			// 	bg.update(1);
-			// 	bg.render();
-			// }, 150 )
-
-			// u všech textových inputů dá tenhle eventhandler
 			$("input[type='text'], textarea").on("click",function(){
 				this.select();
 			})

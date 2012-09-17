@@ -1,9 +1,4 @@
 <?php
-/*
-tasks: název, datum, cíl, popis, příloha, trvání, důležitost,  tvůrce, obor - jaké části hry se toto týká
-pro hezké datum : "d.m.Y G:i"
-*/
-
 require("lib.php");
 if(isset($_COOKIE["user"])){
 	if(!logged($_COOKIE["user"])){
@@ -29,30 +24,26 @@ $tasks = getTasks(false , "tasks.txt");
 <html>
 <head>
 	<meta charset="utf-8">
-	<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
 	<title>Task manager 1.0</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="javascript/prefixfree.min.js"></script>
 	<script src="javascript/game_of_life.js"></script>
 	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 	<script>
+	$(document).on("keyup",function(e){
+		if(e.keyCode == 121){
+			setInterval( function(){
+				bg.update(1);
+				bg.render();
+			}, 133 )
+		}
+	});
 	$(document).ready(function(){
 		bg = new GOLBackground( document.body, 256, 256, 6, 2);
 		bg.update(20);
 		bg.render();
-		// pro pohyblivé pozadí:
-		// setInterval( function(){
-		// 	bg.update(1);
-		// 	bg.render();
-		// }, 150 )
-
-		// $("#task_list .task").on("mouseover", function(){
-		// 	var load_height = $(this).height();
-		// 	console.log(load_height)
-		// 	$(this).css("height", load_height + 'px');
-		// });
 		$("#task_list").height($("#task_list").height()+250)
-	})
+	});
 	
 	function trySubmit(form){
 		if(confirm("Opravdu smazat "+form.children[0].value+"?"))
@@ -69,47 +60,6 @@ include("header.php");
 		<div id="list">
 			<h3>Moje úkoly:</h3>
 			<?php
-				function sklonuj($cislo, $varianty){
-					if($cislo == 1){
-						return $cislo . " " . $varianty[0];
-					}
-					elseif($cislo > 1 && $cislo < 5){
-						return $cislo . " " . $varianty[1];
-					}
-					else {
-						return $cislo . " " . $varianty[2];
-					}
-				}
-				function parseDuration($duration, $date){
-					if($duration < 0){
-						return "Dokončeno";
-					}
-					$zbyva = ($duration + $date) - time();
-					$output = "";
-
-					if($zbyva < 0){
-						$output .= "Vypršel";
-					}
-					elseif($zbyva < 60){
-						$output .= sklonuj($zbyva,array("sekunda","sekundy","sekund"));
-					}
-					elseif($zbyva/60 < 60){
-						$output .= sklonuj(round($zbyva/60),array("minuta","minuty","minut"));
-					}
-					elseif($zbyva/60/60 < 24){
-						$output .= sklonuj(round($zbyva/60/60),array("hodina","hodiny","hodin"));
-					}
-					elseif($zbyva/60/60/24 < 7){
-						$output .= sklonuj(round($zbyva/60/60/24),array("den", "dny", "dní"));
-					}
-					elseif($zbyva/60/60/24/7 < 4){
-						$output .= sklonuj(round($zbyva/60/60/24/7),array("týden","týdny","týdnů"));
-					}
-					else {
-						$output .= $zbyva;
-					}
-					return $output;
-				}
 				function parseTask($task){
 					$shortname = shorten($task["name"], 22);
 

@@ -1,15 +1,15 @@
 <?php
-// require("lib.php");
-// if(isset($_COOKIE["user"])){
-// 	if(!logged($_COOKIE["user"])){
-// 		header("Location: login.php");
-// 		exit;
-// 	}
-// }
-// else {
-// 	header("Location: login.php");
-// 	exit;
-// }
+require("lib.php");
+if(isset($_COOKIE["user"])){
+	if(!logged($_COOKIE["user"])){
+		header("Location: login.php");
+		exit;
+	}
+}
+else {
+	header("Location: login.php");
+	exit;
+}
 ?>
 <html>
 <head>
@@ -23,6 +23,14 @@
 	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 	<script src="./javascript/game_of_life.js"></script>
 	<script>
+	$(document).on("keyup",function(e){
+		if(e.keyCode == 121){
+			setInterval( function(){
+				bg.update(1);
+				bg.render();
+			}, 133 )
+		}
+	});
 	$(document).ready(function(){
 		bg = new GOLBackground( document.body, 256, 256, 6, 2);
 		bg.update(20);

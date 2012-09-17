@@ -1,6 +1,47 @@
 <?php 
 $SALT = "ášlw%ě38+d§/)";
 
+function sklonuj($cislo, $varianty){
+	if($cislo == 1){
+		return $cislo . " " . $varianty[0];
+	}
+	elseif($cislo > 1 && $cislo < 5){
+		return $cislo . " " . $varianty[1];
+	}
+	else {
+		return $cislo . " " . $varianty[2];
+	}
+}
+function parseDuration($duration, $date){
+	if($duration < 0){
+		return "Dokončeno";
+	}
+	$zbyva = ($duration + $date) - time();
+	$output = "";
+
+	if($zbyva < 0){
+		$output .= "Vypršel";
+	}
+	elseif($zbyva < 60){
+		$output .= sklonuj($zbyva,array("sekunda","sekundy","sekund"));
+	}
+	elseif($zbyva/60 < 60){
+		$output .= sklonuj(round($zbyva/60),array("minuta","minuty","minut"));
+	}
+	elseif($zbyva/60/60 < 24){
+		$output .= sklonuj(round($zbyva/60/60),array("hodina","hodiny","hodin"));
+	}
+	elseif($zbyva/60/60/24 < 7){
+		$output .= sklonuj(round($zbyva/60/60/24),array("den", "dny", "dní"));
+	}
+	elseif($zbyva/60/60/24/7 < 4){
+		$output .= sklonuj(round($zbyva/60/60/24/7),array("týden","týdny","týdnů"));
+	}
+	else {
+		$output .= $zbyva;
+	}
+	return $output;
+}
 
 /* Funkce pro práci s úkoly */
 function getTasks( $rest , $tasks_file ){

@@ -36,6 +36,14 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 	<script src="./javascript/game_of_life.js"></script>
 	<script>
+	$(document).on("keyup",function(e){
+		if(e.keyCode == 121){
+			setInterval( function(){
+				bg.update(1);
+				bg.render();
+			}, 133 )
+		}
+	});
 	$(document).ready(function(){
 		bg = new GOLBackground( document.body, 256, 256, 6, 2);
 		bg.update(20);
@@ -73,8 +81,7 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 	include("header.php");
 	?>
 	<div class="filtering">
-		Filtrovat podle tagů: <input class="tags" type="text" placeholder="modely, dolni-patra, budova"><br>
-		Filtrovat podle jména: <input type="text" placeholder="Jan/Hynek/Štěpán/Jirka"><br>
+		Filtrovat podle tagů: <input class="tags" type="text" placeholder="modely, dolni-patra, budova">
 	</div>
 	<?php 
 	if($pole_zaloh){

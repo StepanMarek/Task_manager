@@ -91,7 +91,6 @@ else{
 	<script src="javascript/game_of_life.js"></script>
 	<script src="javascript/prefixfree.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
-
 	<script>
 	function generate_name(dom){
 		var slovesa = ["uvařit", "naprogramovat", "vymodelovat", "postavit", "nakreslit", "napsat", "vygenerovat", "přečíst"];
@@ -122,6 +121,14 @@ else{
 	};
 	
 	var bg;
+	$(document).on("keyup",function(e){
+		if(e.keyCode == 121){
+			setInterval( function(){
+				bg.update(1);
+				bg.render();
+			}, 133 )
+		}
+	});
 	$(document).ready(function(){
 		generate_name( document.getElementById("jmeno_ukolu") );
 		generate_obor( document.getElementById("obor") );
