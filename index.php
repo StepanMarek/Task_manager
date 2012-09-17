@@ -144,7 +144,7 @@ include("header.php");
 				if($tasks !== false){
 					$length = 0;
 					for($i=0;$i<count($tasks);$i++){
-						if($tasks[$i]["target"] != $_COOKIE["user"]){
+						if($tasks[$i]["target"] != $_COOKIE["user"] && $tasks[$i]["target"] != "anyone"){
 							$length++;
 						}
 					}
@@ -154,7 +154,7 @@ include("header.php");
 					echo "<div class='polovina'>";
 
 					for($i=0;$i<count($tasks);$i++){
-						if($tasks[$i]["target"] != $_COOKIE["user"]){
+						if($tasks[$i]["target"] != $_COOKIE["user"] && $tasks[$i]["target"] != "anyone"){
 							continue;
 						}
 						if($count == ceil($length/2))
@@ -182,7 +182,7 @@ include("header.php");
 					$count = 0;
 					echo "<div class='polovina'>";
 					for($i=0;$i<count($tasks);$i++){
-						if($tasks[$i]["target"] == $_COOKIE["user"]){
+						if($tasks[$i]["target"] == $_COOKIE["user"] || $tasks[$i]["target"] == "anyone"){
 							continue;
 						}
 						if($count == ceil($length/2))

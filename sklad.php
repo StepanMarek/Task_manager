@@ -3,6 +3,7 @@ require("lib.php");
 if(isset($_COOKIE["user"])){
 	if(!logged($_COOKIE["user"])){
 		header("Location: login.php");
+		prodlouzit("id");
 		exit;
 	}
 }
