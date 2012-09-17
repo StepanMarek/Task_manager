@@ -5,8 +5,8 @@ $SALT = "ášlw%ě38+d§/)";
 /* Funkce pro práci s úkoly */
 function getTasks( $rest , $tasks_file ){
 	$poradi = ["name","date","target","description","attachement","duration","importancy","creator","domain"];
+	$sid = fopen($tasks_file, "r");
 	if(filesize($tasks_file) > 0){
-		$sid = fopen($tasks_file, "r");
 		$pole = explode("?:;",fread($sid,filesize($tasks_file)));
 		$vysledek = [];
 		for($i=0;$i<count($pole);$i++){
@@ -18,6 +18,8 @@ function getTasks( $rest , $tasks_file ){
 			$vysledek[$i] = $asoc;
 		};
 		fclose($sid);
+		if(!isset($vysledek[0]["target"]))
+			return false;
 		return $vysledek;
 	}
 	else return false;
@@ -68,7 +70,7 @@ function deleteTask( $neco ){
 		if( $neco == explode("?:", $velke_pole[$i])[0] )
 			continue;
 		else{
-			if($i != 0)
+			if($novy_soubor != "")
 				$novy_soubor.="?:;";
 			$novy_soubor.=$velke_pole[$i];
 		}
