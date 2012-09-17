@@ -94,7 +94,7 @@ function finishTask( $neco ){
 			$novy_soubor.= implode("?:",$male_pole);
 		}
 		else{
-			if($i != 0)
+			if($novy_soubor != "")
 				$novy_soubor.="?:;";
 			$novy_soubor.=$velke_pole[$i];
 		}
@@ -193,7 +193,7 @@ function deleteFile( $neco ){
 			continue;
 			}
 		else{
-			if($i != 0)
+			if($novy_soubor != "")
 				$novy_soubor.="\n";
 			$novy_soubor.=$velke_pole[$i];
 		}
