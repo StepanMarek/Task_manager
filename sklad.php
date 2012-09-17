@@ -51,12 +51,14 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 				$(this).css("display","none");
 				var tags = $(this).data("tags").split(" ");
 				for(var i in search){
-					if($.inArray(search[i], tags) >= 0){
-						$(this).css("display","block");
+					for(var tag in tags){
+						if(tags[tag].indexOf(search[i]) >= 0){
+							$(this).css("display","block");
+						}
 					}
 				}
 			})
-		})
+		});
 	});
 	
 	function trySubmit(form){
