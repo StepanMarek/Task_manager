@@ -18,6 +18,12 @@ if(isset($_POST["id"])){
 	}
 };
 
+if(isset($_POST["toDel"])){
+	if(puvodni($_POST["toDel"])){
+		deleteFile($_POST["toDel"]);
+	}
+};
+
 date_default_timezone_set("Europe/Prague");
 $pole_zaloh = getDirArray("sklad/105110102111", false);
 ?>
@@ -51,6 +57,11 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 			})
 		})
 	});
+	
+	function trySubmit(form){
+		if(confirm("Opravdu smazat "+form.children[0].value+"?"))
+			form.submit();
+	};
 	</script>
 	<title>Skladiště</title>
 </head>
@@ -74,7 +85,8 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 				<span class='name'>".$pole_zaloh[$i]["name"]."</span>
 				<span class='tags'><span class='important'>Tagy:</span> ".implode(", ", explode(" ", $pole_zaloh[$i]["tags"]))."</span><br>
 				<span class='date'><span class='important'>Přidáno</span> ".date("d.m.Y G:i",intval($pole_zaloh[$i]["date"]))."</span>
-				<span class='download'>";
+				<span class='download'>
+				";
 		
 			if(substr($pole_zaloh[$i]["download"],0,7) != "http://"){
 				echo "<form method='post' action='sklad.php'>
@@ -85,7 +97,10 @@ $pole_zaloh = getDirArray("sklad/105110102111", false);
 			else{
 				echo "<a href='".$pole_zaloh[$i]["download"]."'>Odkaz</a>";
 			}
-			echo "</span>";
+			echo "</span><div onclick='trySubmit(this.children[0]);'><form method='post' action='sklad.php' style='position: absolute; left: 80%;top: 20%;'>
+				<input type='hidden' value='".$pole_zaloh[$i]["download"]."' name='toDel'>
+				<input type='button' class='odkaz' value='Smazat'>
+				</form></div>";
 			echo	"
 				<div class='moreinfo'>
 					<br>

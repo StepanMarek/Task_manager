@@ -8,6 +8,7 @@ require("lib.php");
 if(isset($_COOKIE["user"])){
 	if(!logged($_COOKIE["user"])){
 		header("Location: login.php");
+		prodlouzit("id");
 		exit;
 	}
 }
@@ -140,7 +141,7 @@ include("header.php");
 					echo "</div>";
 				}
 
-				if($tasks){
+				if($tasks !== false){
 					$length = 0;
 					for($i=0;$i<count($tasks);$i++){
 						if($tasks[$i]["target"] != $_COOKIE["user"]){

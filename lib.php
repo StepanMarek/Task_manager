@@ -168,6 +168,8 @@ function getDirArray($file_name, $rest){
 }
 
 function puvodni($filename){
+	if($filename == "")
+		return false;
 	if(!is_file("sklad/".$filename))
 		return false;
 	if(strpos($filename,"./"))
@@ -177,5 +179,26 @@ function puvodni($filename){
 	if(strpos($filename, "105110102111"))
 		return false;
 	return true;
+};
+
+function deleteFile( $neco ){
+	$sid = fopen("sklad/105110102111","r");
+	$velke_pole = explode("\n",fread($sid,filesize("sklad/105110102111")));
+	$novy_soubor = "";
+	for($i = 0;$i<count($velke_pole);$i++){
+		if( $neco == explode("?:", $velke_pole[$i])[4] ){
+			unlink("sklad/".$neco);
+			continue;
+			}
+		else{
+			if($i != 0)
+				$novy_soubor.="\n";
+			$novy_soubor.=$velke_pole[$i];
+		}
+	}
+	fclose($sid);
+	$sid = fopen("sklad/105110102111","w");
+	fwrite($sid, $novy_soubor);
+	fclose($sid);
 };
 ?>
